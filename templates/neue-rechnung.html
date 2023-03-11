@@ -2,21 +2,14 @@
 
 {% block content %}
 
-<table>
-    <th>Position</th>
-    <th>Einzelpreis</th>
-    <th>Anzahl</th>
-    <th>Zur Rechnung?</th>
-{% for item in items %}
-<tr>
-    <td>{{ item.beschreibung }}</td>
-    <td>{{ item.stueckpreis }} €</td>
-    <td><input type="number" value=1></td>
-    <td><input type="checkbox"></td>
-</tr>
+<h1>Hallo</h1>
 
-{% endfor %}
-</table>
-
+<!-- <form method="POST", action="/neue-rechnung-erzeugen">
+    {{ form.csrf_token }}
+    {{ form.beschreibung }}
+    {{ form.stueckpreis }}
+    {{ form.anzahl }}
+    {{ form.zur_rechnung }}
+</form> -->
 
 {% endblock %}
