@@ -2,14 +2,40 @@
 
 {% block content %}
 
-<h1>Hallo</h1>
+<table class="table">
+    <th>Position</th>
+    <th>Einzelpreis</th>
+    <th>Anzahl</th>
+    <th>Zur Rechnung?</th>
 
-<!-- <form method="POST", action="/neue-rechnung-erzeugen">
-    {{ form.csrf_token }}
-    {{ form.beschreibung }}
-    {{ form.stueckpreis }}
-    {{ form.anzahl }}
-    {{ form.zur_rechnung }}
-</form> -->
+    <form method="POST", action="/neue-rechnung-erzeugen">
+        {{ form.csrf_token }}
+    
+        {% for item in items %}
+        <tr>
+            <td>{{ form.beschreibung(value=item.beschreibung) }}</td>
+            <td>{{ form.stueckpreis(value=item.stueckpreis) }}</td>
+            <td>{{ form.anzahl }}</td>
+            <td>{{ form.zur_rechnung }}</td>
+        </tr>    
+        {% endfor %}
+
+</table>
+
+        <label for="rechnung-fuer">Für Kunden</label>
+        <select id="rechnung-fuer">
+            {% for client in clients %}
+                <option>{{ client.name }}</option>
+            {% endfor %}
+        </select>
+
+        <button class="btn btn-success">Rechnung erzeugen</button>
+        
+    </form>
+
+
+<p>
+    {{ form.data.anzahl }}
+</p>
 
 {% endblock %}

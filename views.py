@@ -13,6 +13,8 @@ def index():
 
 @blp.route('/neue-rechnung-erzeugen')
 def neue_rechnung_erzeugen():
+    items = ItemModel.query.all()    
+    clients = ClientModel.query.all()
     form = ItemForm()
 
-    return render_template('neue-rechnung.html', form=form)
+    return render_template('neue-rechnung.html', form=form, items=items, clients=clients)
