@@ -27,4 +27,9 @@
   - wenn das Formular abgeschickt wird ...
     - Update der Items (Anzahl, Zur_Rechnung)
     - Erzeugen der pdf rechnung
+    - Insert Datensatz Invoice
     - Uodate der Items (Anzahl, Zur_Rechnung) -> NULL
+
+## Alternativ
+
+- jjnlknkj

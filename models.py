@@ -31,14 +31,7 @@ class InvoiceModel(db.Model):
 
     def __repr__(self) -> str:
         return self.id
-    
-'''
-Foreign key associated with column 'invoice.kunde' could not find table 'clientmodel' 
-with which to generate a foreign key to target column 'id'
-'''
-
-
-    
+        
 class ItemModel(db.Model):
     __tablename__ = 'item'
 

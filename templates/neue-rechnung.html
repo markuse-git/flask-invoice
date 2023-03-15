@@ -13,10 +13,10 @@
     
         {% for item in items %}
         <tr>
-            <td>{{ form.beschreibung(value=item.beschreibung) }}</td>
-            <td>{{ form.stueckpreis(value=item.stueckpreis) }}</td>
-            <td>{{ form.anzahl }}</td>
-            <td>{{ form.zur_rechnung }}</td>
+            <td>{{ form['beschreibung'](value=item.beschreibung) }}</td>
+            <td>{{ form['stueckpreis'](value=item.stueckpreis) }}</td>
+            <td>{{ form['anzahl'] }}</td>
+            <td>{{ form['zur_rechnung'] }}</td>
         </tr>    
         {% endfor %}
 
