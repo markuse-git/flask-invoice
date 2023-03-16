@@ -19,10 +19,10 @@ def neue_rechnung_erzeugen():
     clients = ClientModel.query.all()
 
     for item in items:
-        setattr(ItemForm, 'beschreibung', StringField(item.beschreibung))
-        setattr(ItemForm, 'stueckpreis', FloatField(item.stueckpreis))
-        setattr(ItemForm, 'anzahl', IntegerField(item.anzahl, default=0))
-        setattr(ItemForm, 'zur_rechnung', BooleanField(item.zur_rechnung, default=False))
+        setattr(ItemForm, 'beschreibung' + str(item.id), StringField(item.beschreibung))
+        setattr(ItemForm, 'stueckpreis' + str(item.id), FloatField(item.stueckpreis))
+        setattr(ItemForm, 'anzahl' + str(item.id), IntegerField(item.anzahl, default=0))
+        setattr(ItemForm, 'zur_rechnung' + str(item.id), BooleanField(item.zur_rechnung, default=False))
 
     form = ItemForm()
 
