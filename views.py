@@ -26,4 +26,19 @@ def neue_rechnung_erzeugen():
 
     form = ItemForm()
 
+    results = {}
+    if form.validate_on_submit():
+        for i in range(len(items)):
+            rechnung = getattr(form, 'zur_rechnung' + str(i+1))
+            if rechnung.data == True:
+                einzelpreis = getattr(form, 'stueckpreis' + str(i+1))
+                anzahl = getattr(form, 'anzahl' + str(i+1))
+                result = float(einzelpreis.data) * float(anzahl.data)
+                results[i] = result
+            final_result = 0
+            for r in results:
+                final_result = final_result + results[r]
+            brutto = final_result * 1.19
+        return str(brutto)
+
     return render_template('neue-rechnung.html', form=form, items=items, clients=clients)
