@@ -8,28 +8,22 @@
 
 ## offene Fragen
 
-- wenn einzelene Positionen in der DB gespeichert werden
-  - wie können in der Tabellenausgabe 'Anzahl' und 'zur Rechnung hinzufügen' nachträglich gesetzt werden?
+platzhalter
 
 ## Plan
 
-- In der Tabellenansicht der Positionen können 'Anzahl' und 'zur Rechnung hinzufügen' upgedated werden
-- Unter Tabellenansicht (Positionen): Rechnung für Kunde (select) + Btn Rechnung erzeugen
 - pdf wird erzeugt
 - es wird ein Datensatz in der Tabelle 'Rechnungen' erzeugt. Inkl. pdf (Nr., Datum, Kunde, Betrag, beglichen?, pdf)
 - Nach Rechnungs-Suche wird die Summe der Rechnungsbeträge ausgegeben
 - Rechnungssuche nach Datum (Jahr, Monat), Kunde, beglichen?
 
-## Aufbau
+## Fixes
 
-- Neue Rechnung erzeugen Seite mit Ausgabe Tabelle Items
-  - Statt einer Abfrage sollte das wohl eher ein Formular (wtf) mit vobelegten Werten aus der Abfrage sein
-  - wenn das Formular abgeschickt wird ...
-    - Update der Items (Anzahl, Zur_Rechnung)
-    - Erzeugen der pdf rechnung
-    - Insert Datensatz Invoice
-    - Uodate der Items (Anzahl, Zur_Rechnung) -> NULL
+- In der Tabelle items_invoices werden keine Einträge gesetzt
+- manchmal wird eine neue DB unter instance erzeugt; manchemal im Hauptverzeichnis
 
-## Alternativ
+## Modifikationen
 
-- jjnlknkj
+- Neue Rechnung erzeugen -> Feld 'Zur Rechnung?' wird eigentlich nicht benötigt. Hinzugefügt wird wenn Anzahl > 0
+- Das Feld 'Zur Rechnung' muss entsprechend nicht in das ItemModel; dann auch nicht unter Admin/Item
+- Das Feld 'Anzahl' wird in der DB (Items) eigentlich nicht benötigt

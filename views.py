@@ -1,9 +1,12 @@
+from datetime import datetime
+
 from flask import render_template, redirect, url_for
 from flask_smorest import Blueprint
-from wtforms import StringField, BooleanField, IntegerField, FloatField
+from wtforms import StringField, BooleanField, IntegerField, FloatField, SelectField
 
 from models import ClientModel, ItemModel, InvoiceModel
 from forms import ItemForm
+from db import db
 
 
 blp = Blueprint('views', __name__, description="actions on views")
@@ -17,6 +20,12 @@ def neue_rechnung_erzeugen():
 
     items = ItemModel.query.all()    
     clients = ClientModel.query.all()
+    
+    clients_names = []
+    for client in clients:
+        clients_names.append(client.name)
+
+    ItemForm.client = SelectField('client', choices=clients_names)
 
     for item in items:
         setattr(ItemForm, 'beschreibung' + str(item.id), StringField(item.beschreibung))
@@ -27,6 +36,7 @@ def neue_rechnung_erzeugen():
     form = ItemForm()
 
     results = {}
+    output = ''
     if form.validate_on_submit():
         for i in range(len(items)):
             rechnung = getattr(form, 'zur_rechnung' + str(i+1))
@@ -39,6 +49,19 @@ def neue_rechnung_erzeugen():
             for r in results:
                 final_result = final_result + results[r]
             brutto = final_result * 1.19
-        return str(brutto)
 
-    return render_template('neue-rechnung.html', form=form, items=items, clients=clients)
+        # um unter kunde die client.id speichern zu können; Sonst wird Client nicht unter Admin/Invoice angezeigt
+        client = ClientModel.query.filter(ClientModel.name == form.client.data).first()
+
+        new_invoice = InvoiceModel(
+            datum = datetime.now(),
+            betrag = brutto,
+            beglichen = False,
+            kunde = client.id
+        )
+        db.session.add(new_invoice)
+        db.session.commit()
+            
+        output = "Rechnung wurde erzeugt"
+
+    return render_template('neue-rechnung.html', form=form, items=items, clients=clients, output=output)

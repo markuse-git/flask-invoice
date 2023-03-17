@@ -23,19 +23,14 @@
 
 </table>
 
-        <label for="rechnung-fuer">Für Kunden</label>
-        <select id="rechnung-fuer">
-            {% for client in clients %}
-                <option>{{ client.name }}</option>
-            {% endfor %}
-        </select>
+        Für Kunden {{ form.client }}
 
         <button class="btn btn-success">Rechnung erzeugen</button>
         
     </form>
 
 <p>
-    {{form.anzahl2.data}}
+    {{ output }}
 </p>
 
 {% endblock %}
