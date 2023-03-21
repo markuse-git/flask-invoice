@@ -14,3 +14,4 @@ requests
 passlib
 python-dotenv
 gunicorn
+fpdf

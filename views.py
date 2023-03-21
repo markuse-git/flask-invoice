@@ -7,9 +7,10 @@ from wtforms import StringField, BooleanField, IntegerField, FloatField, SelectF
 from models import ClientModel, ItemModel, InvoiceModel
 from forms import ItemForm
 from db import db
-
+from report import create_pdf
 
 blp = Blueprint('views', __name__, description="actions on views")
+
 
 @blp.route('/')
 def index():
@@ -50,8 +51,18 @@ def neue_rechnung_erzeugen():
                 final_result = final_result + results[r]
             brutto = final_result * 1.19
 
+            # todo im Loop beschreibung einbauen; ggf. nummerieren; 
+            # todo an funktionsaufruf create pdf überheben
+            # todo ggf. variable parameter in report/create_pdf -> vermutlich eher ohne
+            # todo evtl. im Loop in Liste füllen und dann Liste von parametern übergeben
+
         # um unter kunde die client.id speichern zu können; Sonst wird Client nicht unter Admin/Invoice angezeigt
         client = ClientModel.query.filter(ClientModel.name == form.client.data).first()
+
+        client_name = client.name
+        strasse = client.strasse
+        plz = client.plz
+        ort = client.ort
 
         new_invoice = InvoiceModel(
             datum = datetime.now(),
@@ -61,6 +72,15 @@ def neue_rechnung_erzeugen():
         )
         db.session.add(new_invoice)
         db.session.commit()
+
+        create_pdf(
+            brutto=str(brutto), 
+            client_name=client_name,
+            str = strasse,
+            plz = str(plz),
+            ort = ort
+        )
+        
             
         output = "Rechnung wurde erzeugt"
 
