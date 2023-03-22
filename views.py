@@ -36,25 +36,27 @@ def neue_rechnung_erzeugen():
 
     form = ItemForm()
 
-    results = {}
     output = ''
     if form.validate_on_submit():
+        results = {}
+        item_args = []
         for i in range(len(items)):
             rechnung = getattr(form, 'zur_rechnung' + str(i+1))
             if rechnung.data == True:
                 einzelpreis = getattr(form, 'stueckpreis' + str(i+1))
+                beschreibung = getattr(form, 'beschreibung' + str(i+1))
                 anzahl = getattr(form, 'anzahl' + str(i+1))
                 result = float(einzelpreis.data) * float(anzahl.data)
                 results[i] = result
+                item_args.append(beschreibung.data)
+                item_args.append(str(anzahl.data))
+                item_args.append(str(einzelpreis.data))
+                item_args.append(str(result))
             final_result = 0
             for r in results:
                 final_result = final_result + results[r]
             brutto = final_result * 1.19
-
-            # todo im Loop beschreibung einbauen; ggf. nummerieren; 
-            # todo an funktionsaufruf create pdf überheben
-            # todo ggf. variable parameter in report/create_pdf -> vermutlich eher ohne
-            # todo evtl. im Loop in Liste füllen und dann Liste von parametern übergeben
+            mwst = final_result * 0.19
 
         # um unter kunde die client.id speichern zu können; Sonst wird Client nicht unter Admin/Invoice angezeigt
         client = ClientModel.query.filter(ClientModel.name == form.client.data).first()
@@ -74,11 +76,14 @@ def neue_rechnung_erzeugen():
         db.session.commit()
 
         create_pdf(
+            item_args,
             brutto=str(brutto), 
             client_name=client_name,
             str = strasse,
             plz = str(plz),
-            ort = ort
+            ort = ort,
+            netto = str(final_result),
+            mwst = str(mwst)
         )
         
             
