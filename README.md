@@ -20,10 +20,17 @@ platzhalter
 ## Fixes
 
 - In der Tabelle items_invoices werden keine Einträge gesetzt
-- manchmal wird eine neue DB unter instance erzeugt; manchemal im Hauptverzeichnis
 
 ## Modifikationen
 
 - Neue Rechnung erzeugen -> Feld 'Zur Rechnung?' wird eigentlich nicht benötigt. Hinzugefügt wird wenn Anzahl > 0
 - Das Feld 'Zur Rechnung' muss entsprechend nicht in das ItemModel; dann auch nicht unter Admin/Item
 - Das Feld 'Anzahl' wird in der DB (Items) eigentlich nicht benötigt
+
+## todo
+
+- fortlaufende Rechnungsnummer
+- Sidebar
+- Bilder einbauen
+- Layout Korrekturen (Farben, Linien, Fett)
+- Währungsformat?

@@ -79,7 +79,7 @@ def neue_rechnung_erzeugen():
             item_args,
             brutto=str(brutto), 
             client_name=client_name,
-            str = strasse,
+            strasse = strasse,
             plz = str(plz),
             ort = ort,
             netto = str(final_result),
