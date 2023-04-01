@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from flask import render_template, redirect, url_for
 from flask_smorest import Blueprint
@@ -9,7 +9,10 @@ from forms import ItemForm
 from db import db
 from report import create_pdf
 
+
 blp = Blueprint('views', __name__, description="actions on views")
+
+rechnungsnr = 1181
 
 
 @blp.route('/')
@@ -40,6 +43,12 @@ def neue_rechnung_erzeugen():
     if form.validate_on_submit():
         results = {}
         item_args = []
+        today = datetime.now().strftime('%d.%m.%Y')
+        target_date = datetime.now() + timedelta(days=10)
+        target_output = target_date.strftime('%d.%m.%Y')
+        global rechnungsnr
+        rechnungsnr += 1
+        rechnungsnummer_output = datetime.now().strftime('%Y%m') + str(rechnungsnr)
         for i in range(len(items)):
             rechnung = getattr(form, 'zur_rechnung' + str(i+1))
             if rechnung.data == True:
@@ -75,18 +84,32 @@ def neue_rechnung_erzeugen():
         db.session.add(new_invoice)
         db.session.commit()
 
-        create_pdf(
-            item_args,
-            brutto=str(brutto), 
-            client_name=client_name,
-            strasse = strasse,
-            plz = str(plz),
-            ort = ort,
-            netto = str(final_result),
-            mwst = str(mwst)
-        )
-        
+        #* Vorläufig zugunsten der html Rechnung deaktiviert
+        # create_pdf(
+        #     item_args,
+        #     brutto=str(brutto), 
+        #     client_name=client_name,
+        #     strasse = strasse,
+        #     plz = str(plz),
+        #     ort = ort,
+        #     netto = str(final_result),
+        #     mwst = str(mwst)
+        # )
             
         output = "Rechnung wurde erzeugt"
+        return render_template(
+            'invoice.html', 
+            item_args=item_args,
+            client_name=client_name,
+            strasse=strasse,
+            plz=str(plz),
+            ort=ort,
+            netto=str(final_result),
+            mwst=str(mwst),
+            brutto=str(brutto),
+            today=today,
+            target_output=target_output,
+            rechnungsnummer_output=rechnungsnummer_output
+            )
 
     return render_template('neue-rechnung.html', form=form, items=items, clients=clients, output=output)

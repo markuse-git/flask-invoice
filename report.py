@@ -43,7 +43,7 @@ def create_pdf(item_args, client_name, brutto, strasse, plz, ort, netto, mwst):
     invoice.add_page()
 
     # LOGO
-    invoice.image('./images/logo.jpg', 160,15,40) #! verursacht z.T den Fehler Data
+    # invoice.image('./images/logo.jpg', 160,15,40) #! verursacht z.T den Fehler KeyError: 'data'
 
     # Adressat
     invoice.set_font("Helvetica","",10)

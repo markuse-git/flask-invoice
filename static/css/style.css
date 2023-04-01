@@ -1,0 +1,43 @@
+#pk{
+    font-size: 14px;
+}
+
+#adressat{
+    font-size: 16px;
+}
+
+#base-lines{
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10%;
+    margin-bottom: 5%;
+}
+
+.zahlungsfrist{
+    font-size: 16px;
+    margin-top: 10%;
+    margin-bottom: 10%;
+}
+
+.footer{
+    margin-top: 10%;
+}
+
+.schlusssatz{
+    font-size: 14px;
+}
+
+.brutto-line{
+    color: white;
+    background-color: darkslategray;
+    font-weight: bold;
+}
+
+.table-striped>tbody>tr:nth-last-child(odd){
+    color: blue;
+}
+
+.logo{
+    margin-bottom: 40%;
+    margin-top: 10%;
+}
