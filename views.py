@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-from flask import render_template, redirect, url_for
+from flask import render_template, redirect, url_for, make_response
 from flask_smorest import Blueprint
 from wtforms import StringField, BooleanField, IntegerField, FloatField, SelectField
 
@@ -8,6 +8,9 @@ from models import ClientModel, ItemModel, InvoiceModel
 from forms import ItemForm
 from db import db
 from report import create_pdf
+from convert2pdf import print_invoice
+
+import pdfkit
 
 
 blp = Blueprint('views', __name__, description="actions on views")
@@ -17,7 +20,8 @@ rechnungsnr = 1181
 
 @blp.route('/')
 def index():
-    return 'das steht schon mal'
+    # return 'das steht schon mal'
+    return render_template('index.html')
 
 @blp.route('/neue-rechnung-erzeugen', methods=['GET','POST'])
 def neue_rechnung_erzeugen():
@@ -97,8 +101,10 @@ def neue_rechnung_erzeugen():
         # )
             
         output = "Rechnung wurde erzeugt"
-        return render_template(
-            'invoice.html', 
+
+        # todo statt return rendered =
+        rendered = render_template(
+            'invoice-float.html', 
             item_args=item_args,
             client_name=client_name,
             strasse=strasse,
@@ -111,5 +117,21 @@ def neue_rechnung_erzeugen():
             target_output=target_output,
             rechnungsnummer_output=rechnungsnummer_output
             )
+        
+        # todo zu reakktivieren!
+        print_invoice(rendered, 'converted.pdf')
+        
+        # config = pdfkit.configuration(wkhtmltopdf='/Users/markuseichelhardt/opt/anaconda3/lib/python3.9/site-packages/wkhtmltopdf')
+        
+        # pdf = pdfkit.from_string(rendered, output_path='out.pdf')
+        # response = make_response(pdf)
+        # response.headers['Content-Type'] = 'application/pdf'
+        # response.headers['Content-Disposition'] = 'inline; filename=output.pdf'
+        # return response
+        # 
+        # pdfkit.from_url('http://127.0.0.1:5000/neue-rechnung-erzeugen', 'google.pdf') 
+        # pdfkit.from_file('./templates/invoice.html', 'out.pdf')
+        # pdfkit.from_string(rendered, 'string.pdf')
+
 
     return render_template('neue-rechnung.html', form=form, items=items, clients=clients, output=output)

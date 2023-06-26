@@ -2,35 +2,39 @@
 
 {% block content %}
 
-<table class="table">
-    <th>Position</th>
-    <th>Einzelpreis</th>
-    <th>Anzahl</th>
-    <th>Zur Rechnung?</th>
+<div class="container">
 
-    <form method="POST", action="/neue-rechnung-erzeugen">
-        {{ form.csrf_token }}
+    <table class="table">
+        <th>Position</th>
+        <th>Einzelpreis</th>
+        <th>Anzahl</th>
+        <th>Zur Rechnung?</th>
     
-        {% for item in items %}
-        <tr>
-            <td>{{ form['beschreibung' + item.id|string](value=item.beschreibung) }}</td>
-            <td>{{ form['stueckpreis' + item.id|string](value=item.stueckpreis) }}</td>
-            <td>{{ form['anzahl' + item.id|string] }}</td>
-            <td>{{ form['zur_rechnung' + item.id|string] }}</td>
-            
-        </tr>    
-        {% endfor %}
-
-</table>
-
-        Für Kunden {{ form.client }}
-
-        <button class="btn btn-success">Rechnung erzeugen</button>
+        <form method="POST", action="/neue-rechnung-erzeugen">
+            {{ form.csrf_token }}
         
-    </form>
+            {% for item in items %}
+            <tr>
+                <td>{{ form['beschreibung' + item.id|string](value=item.beschreibung) }}</td>
+                <td>{{ form['stueckpreis' + item.id|string](value=item.stueckpreis) }}</td>
+                <td>{{ form['anzahl' + item.id|string] }}</td>
+                <td>{{ form['zur_rechnung' + item.id|string] }}</td>
+                
+            </tr>    
+            {% endfor %}
+    
+    </table>
+    
+            Für Kunden {{ form.client }}
+    
+            <button class="btn btn-success">Rechnung erzeugen</button>
+            
+        </form>
+    
+    <p>
+        {{ output }}
+    </p>
 
-<p>
-    {{ output }}
-</p>
+</div>
 
 {% endblock %}

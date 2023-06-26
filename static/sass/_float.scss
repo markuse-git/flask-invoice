@@ -1,0 +1,189 @@
+$gutter: 1rem;
+
+.main-float-container {
+    width: 100%;
+    height: 30rem;
+    margin: 2rem auto;
+    font-size: 1.6rem;
+
+    .main-float {
+        // width: calc(2 * (100% - 2 * #{$gutter}) / 3  + #{$gutter});
+        width: 70%;
+        background-color: white;
+        color: black;
+        float: left;
+
+        .address-bar {
+            &__abs {
+                font-size: 1.3rem;
+                margin-bottom: -.1rem;
+            }
+        }
+
+        .synopsis {
+            margin-top: 15rem;
+            font-weight: bold;
+        }
+
+        .table {
+            margin-top: 7rem;
+
+            &__sum-lines{
+                text-align: right;
+            }
+
+            table {
+                border-collapse: collapse;
+                width: 100%;
+        
+                tr{
+                    border-top: 2px solid #eee;
+                }
+        
+                th {
+                    padding: 15px;
+                    text-align: left;
+                    margin-right: 2rem;
+        
+                    &:nth-child(3) {
+                        text-align: right;
+                    }
+            
+                    &:nth-child(4) {
+                        text-align: right;
+                    }
+            
+                    &:nth-child(5) {
+                        text-align: right;
+                    }
+                }
+            
+                td {
+                    padding: 15px;
+                    margin-right: 5rem;
+        
+                    &:first-child {
+                        width: 5%;
+                    }
+            
+                    &:nth-child(2) {
+                        width: 55%;
+                    }
+            
+                    &:nth-child(3) {
+                        width: 10%;
+                        text-align: right;
+                    }
+            
+                    &:nth-child(4) {
+                        width: 15%;
+                        text-align: right;
+                    }
+            
+                    &:nth-child(5) {
+                        width: 15%;
+                        text-align: right;
+                    }
+                }
+               
+                .brutto-line{
+                    background-color: #0D4266;
+                    color: white;
+                    font-weight: bold;
+                } 
+
+            }
+        }
+
+        .zahlungshinweis {
+            margin-top: 10rem;
+        }
+
+        .signature{        
+            margin-top: 10rem;
+            position: relative;
+
+            &__date {
+                margin-bottom: 5rem;
+            }
+
+            &__stempel {
+                position: absolute;
+                right: 1rem;
+                top: -5rem;
+            }
+
+            &__line{
+                &::after{
+                    content: "";
+                    height: 1px;
+                    display: block;
+                    background-color: currentColor;
+                }
+            }
+
+            &__ort {
+                width: 50%;
+                float: left;
+            }
+            
+            &__name {
+                float: right;
+            }
+        }
+
+        .footer {
+
+            margin-top: 15rem;
+
+            &__logo {
+                float: left;
+                width: 15%;
+            }
+
+            &__text {
+                float: left;
+                width: 85%;
+            }
+
+        }
+
+    }
+
+    .sidebar-float {
+        // width: calc((100% - 2 * #{$gutter}) / 3);
+        width: 25%;
+        background-color: white;
+        color: black;
+        float: left;
+        margin-left: 5%;
+        overflow: hidden;
+        color: grey;
+
+        // margin-top: 1rem;
+
+        .logo__img {
+            width: 100%;
+            margin-bottom: 15rem;
+        }
+
+        .sidebar__block {
+            margin-top: 1rem;
+
+            &:not(:last-child) {
+                &::after{
+                    content: "#######################################################";
+                    font-size: .8rem;
+                    font-weight: bold;
+                    color: #0D4266;
+                }
+            }
+        
+            & p span{
+                font-weight: bold;
+            }
+
+        }
+    }
+
+}

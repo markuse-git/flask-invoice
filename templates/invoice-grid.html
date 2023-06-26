@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="mygrid">
+    <div class="address-bar">
+        <p class="address-bar__abs">Peter Kuschmierz/</p>
+        <p class="address-bar__address">
+            {{ client_name }}<br>
+            {{ strasse }}<br>
+            {{ plz }} {{ ort }}
+        </p>
+    </div>
+
+    <div class="logo">
+        <img src="../static/images/logo.jpg" alt="peters logo" class="logo__img">
+    </div>
+
+    <div class="synopsis">
+        <p>
+            Rg.Nr.: {{ rechnungsnummer_output }}<br>
+            Rechnungs Datum: {{ today }} / Fällig bis: {{ target_output }}<br>
+            Fälliger Betrag: {{ brutto }} €
+        </p>
+    </div>
+
+    <div class="sidebar">
+        <div class="sidebar__block">
+            <p>
+                <span>Postadresse:</span><br>
+                P / Kuschmierz<br>
+                Organisationsberatung<br>
+                Ruhrtalstr. 33a (Tor 3)<br>
+                45239 Essen
+            </p>
+        </div>
+
+        <div class="sidebar__block">
+            <p>
+                <span>Kontakt:</span><br>
+                Tel.: 0201 / 451 387 00<br>
+                Mobil: 0172 / 454 4 167<br>
+                info@pkuschmierz.de<br>
+                www.pkuschmierz.de
+            </p>
+        </div>
+
+        <div class="sidebar__block">
+            <p>
+                <span>Bankverbindung:</span><br>
+                Sparkasse Essen<br>
+                Peter Kuschmierz<br>
+                IBAN: DE123123123123123<br>
+                BIC: SPESDE3EXXX
+            </p>
+        </div>
+
+        <div class="sidebar__block">
+            <p>
+                <span>Steuernummer:</span> 112/5240/1521<br>
+                <span>Steuer ID:</span> 80 123 123123
+            </p>
+        </div>
+    </div>
+
+    <div class="table">
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Nr.</th>
+                    <th scope="col">Beschreibung</th>
+                    <th scope="col">Menge&nbsp/ Tag(e)</th>
+                    <th scope="col">Preis</th>
+                    <th scope="col">Gesamt</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in range(item_args | length // 4) %}
+                <tr>
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ item_args[i * 4 + 0] }}</td>
+                    <td>{{ item_args[i * 4 + 1] }}</td>
+                    <td>{{ item_args[i * 4 + 2] }}&nbsp€</td>
+                    <td>{{ item_args[i * 4 + 3] }}&nbsp€</td>
+                </tr>
+                {% endfor %}
+                <tr class="table__sum-lines">
+                    <td colspan="3">Summe Netto:</td>
+                    <td colspan="2">{{ netto }} €</td>
+                </tr>
+                <tr class="table__sum-lines">
+                    <td colspan="3">gesetzl. MwSt.</td>
+                    <td colspan="2">{{ mwst }} €</td>
+                </tr>
+                <tr class="brutto-line table__sum-lines">
+                    <td colspan="3">Summe Brutto:</td>
+                    <td colspan="2">{{ brutto }} €</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="zahlungshinweis">
+        <p>
+            Überweisen Sie bitte die Rechnungssumme innerhalb von 10 Tagen
+            nach Rechnungsdatum auf das rechts genannte Bankkonto. Alle hier aufgeführten
+            Leistungen bleiben bis zur vollständigen Bezahlung
+            Eigentum von reative4web und dürfen nur mit Vorbehalt bis dahin verwendet werden.
+        </p>
+    </div>
+
+    <div class="signature">
+        <div class="signature__date">{{ today }}</div>
+        <img src="../static/images/signature.png" alt="stempel" class="signature__stempel">
+        <div class="signature__line"></div>
+        <div class="signature__ort">Ort, Datum</div>
+        <div class="signature__name">Peter Kuschmierz</div>
+    </div>
+
+    <div class="footer">
+        <div class="footer__logo">
+            <img src="../static/images/logo-part.png" alt="">
+        </div>
+        <div class="footer__text">
+            <p>
+                Die eigene Sicherheit liegt in unseren Händen, deshalb heißt der 
+                gemeinsame Nenner Einschätzung und Vorhersage. Meine Firma sagt 
+                menschliches Verhalten voraus. Verhalten in einer einzigen Kategorie.
+                Gewalt! Doch viel öfter sagen wir Sicherheit voraus. 
+            </p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
