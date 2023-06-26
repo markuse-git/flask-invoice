@@ -1,5 +1,4 @@
 import pdfkit
-from xhtml2pdf import pisa
 
 
 # --------- PDFKIT -----------------
@@ -19,13 +18,3 @@ def print_invoice(html_path, pdf_path):
     css = "./static/css/style.css"
 
     pdfkit.from_string(html_path, pdf_path, options=options, css=css)
-
-# --------- PISA -----------------
-
-# def print_invoice(html, pdf):
-#     result_file = open(pdf, 'wb+')
-
-#     css = "./static/css/style.css"
-
-#     pisa.CreatePDF(html, dest=result_file, path=html)
-

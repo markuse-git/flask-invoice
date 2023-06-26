@@ -12,9 +12,10 @@ class MyInvoice(FPDF):
 
     def footer(self):
         self.set_font("Helvetica", "",8)
-        text = ("Die eigene Sicherheit liegt in unseren Händen, deshalb jeißt der gemeinsame Nenner"
-        "Einschätzung und Vorhersage. Meine Firma sagt menschliches Verhalten voraus, Verhalten"
-        "in einer einzigen Kategorie. Gewalt! Doch viel öfter sagen wir Sicherheit voraus.")
+        text = ("Die eigene Sicherheit liegt in unseren Händen, deshalb jeißt" 
+                "der gemeinsame Nenner Einschätzung und Vorhersage. Meine Firma" 
+                "sagt menschliches Verhalten voraus, Verhalten in einer einzigen" 
+                "Kategorie. Gewalt! Doch viel öfter sagen wir Sicherheit voraus.")
         self.write(5,text)
 
 invoice = MyInvoice()
@@ -22,7 +23,8 @@ invoice = MyInvoice()
 invoice.set_font("Helvetica", "", 11)
 
 def create_item(item_args, i):
-    s = i * 4 # bei 0,1,2,3 -> 0,4,8,12 -> (+0,+1,+2,+3) -> [(0,1,2,4),(5,6,7,8),(9,10,11,12)]
+    # bei 0,1,2,3 -> 0,4,8,12 -> (+0,+1,+2,+3) -> [(0,1,2,4),(5,6,7,8),(9,10,11,12)]
+    s = i * 4 
     invoice.cell(10, 10, str(i+1), 'T',0,'L',0)
     invoice.cell(60, 10, item_args[s+0], 'T',0,'L',0)
     invoice.cell(20, 10, item_args[s+1], 'T',0,'R',0)
@@ -36,14 +38,16 @@ def create_pdf(item_args, client_name, brutto, strasse, plz, ort, netto, mwst):
     target = datetime.now() + timedelta(days=14)
     target_output = target.strftime('%d.%m.%Y')
     global rechnungsnummer
-    rechnungsnummer += 1 #! Loop funktioniert nicht; scheint nicht in globale var zurück zu schreiben!
+    #! Loop funktioniert nicht; scheint nicht in globale var zurück zu schreiben!
+    rechnungsnummer += 1 
     rechnungsnummer_output = datetime.now().strftime('%Y%m') + str(rechnungsnummer)
     
     invoice.alias_nb_pages()
     invoice.add_page()
 
     # LOGO
-    # invoice.image('./images/logo.jpg', 160,15,40) #! verursacht z.T den Fehler KeyError: 'data'
+    # invoice.image('./images/logo.jpg', 160,15,40) 
+    # #! verursacht z.T den Fehler KeyError: 'data'
 
     # Adressat
     invoice.set_font("Helvetica","",10)
@@ -83,11 +87,13 @@ def create_pdf(item_args, client_name, brutto, strasse, plz, ort, netto, mwst):
     for i in range(len(item_args)//4):
         create_item(item_args, i)
         '''
-        Die td werden in views in eine Liste geschrieben und diese als Parameter in die Funktion
-        create_pdf übergeben. Jede Zeile besteht aus 4 td. Daher wird die Funktion create_item
-        sooft aufgerufen, wie es Zeilen gibt (len(item_args)/4). // damit daraus kein float wird,
-        sondern ein int bleibt. i wird in create_item als parameter mitgegeben, damit der startpunkt (s)
-        für den index geändert werden kann. Damit bei jedem Aufrufe der Funktion ein anderes item generiert wird.
+        Die td werden in views in eine Liste geschrieben und diese als Parameter in die 
+        Funktioncreate_pdf übergeben. Jede Zeile besteht aus 4 td. Daher wird die 
+        Funktion create_item sooft aufgerufen, wie es Zeilen gibt (len(item_args)/4). 
+        // damit daraus kein float wird, sondern ein int bleibt. i wird in create_item 
+        als parameter mitgegeben, damit der startpunkt (s) für den index geändert 
+        werden kann. Damit bei jedem Aufrufe der Funktion ein anderes item 
+        generiert wird.
         '''
 
     invoice.cell(90,10, 'Summe Netto:', 'T', 0, 'R', 0)
@@ -105,8 +111,8 @@ def create_pdf(item_args, client_name, brutto, strasse, plz, ort, netto, mwst):
 
     # Zahlungshinweis
     invoice.set_font("Helvetica", "", 10)
-    hinweis = ("Überweisen Sie bitte die Rechnungssumme innerhalb von 10 Tagen auf das rechts"
-               "genannte Bankkonto.")
+    hinweis = ("Überweisen Sie bitte die Rechnungssumme innerhalb von 10 Tagen" 
+               "auf das rechts genannte Bankkonto.")
     # invoice.write(5,hinweis)
     invoice.multi_cell(130,5,hinweis,0)
     invoice.ln(20)
@@ -143,4 +149,5 @@ def create_pdf(item_args, client_name, brutto, strasse, plz, ort, netto, mwst):
 
     invoice.ln(20)
  
-    invoice.output("./reports/" + client_name.replace(' ','').lower() + "_" + today_file + ".pdf")
+    path = "./reports/" + client_name.replace(' ','').lower() + "_" + today_file + ".pdf"  # noqa: E501
+    invoice.output(path)
