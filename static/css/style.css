@@ -116,3 +116,32 @@ body {
         color: #0D4266; }
       .main-float-container .sidebar-float .sidebar__block p span {
         font-weight: bold; }
+
+.table__head-position {
+  text-align: left; }
+
+.table__head-einzelpreis {
+  text-align: right; }
+
+.table__head-anzahl {
+  text-align: right; }
+
+.table > * input {
+  border: none;
+  width: 90%; }
+
+.table__description {
+  width: 50rem; }
+
+.table__stueckpreis {
+  width: 10rem; }
+  .table__stueckpreis input {
+    text-align: right; }
+
+.table__anzahl {
+  width: 5rem; }
+  .table__anzahl input {
+    text-align: right; }
+
+.table__zur-rechnung {
+  width: 5rem; }

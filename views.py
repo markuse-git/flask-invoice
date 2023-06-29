@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 from flask import render_template
 from flask_smorest import Blueprint
-from wtforms import StringField, BooleanField, IntegerField, FloatField, SelectField
+from wtforms import StringField, BooleanField, IntegerField, SelectField, DecimalField
 
 from models import ClientModel, ItemModel, InvoiceModel
 from forms import ItemForm
@@ -33,7 +33,7 @@ def neue_rechnung_erzeugen():
 
     for item in items:
         setattr(ItemForm, 'beschreibung' + str(item.id), StringField(item.beschreibung))
-        setattr(ItemForm, 'stueckpreis' + str(item.id), FloatField(item.stueckpreis))
+        setattr(ItemForm, 'stueckpreis' + str(item.id), DecimalField(item.stueckpreis))
         setattr(ItemForm, 'anzahl' + str(item.id), IntegerField(item.anzahl, default=0))
         setattr(ItemForm, 'zur_rechnung' + str(item.id), BooleanField(item.zur_rechnung, default=False))  # noqa: E501
 
@@ -50,22 +50,23 @@ def neue_rechnung_erzeugen():
         rechnungsnr += 1
         rechnungsnummer_output = datetime.now().strftime('%Y%m') + str(rechnungsnr)
         for i in range(len(items)):
-            rechnung = getattr(form, 'zur_rechnung' + str(i+1))
-            if rechnung.data is True:
+            anzahl = getattr(form, 'anzahl' + str(i+1))
+            if anzahl.data > 0:
                 einzelpreis = getattr(form, 'stueckpreis' + str(i+1))
                 beschreibung = getattr(form, 'beschreibung' + str(i+1))
                 anzahl = getattr(form, 'anzahl' + str(i+1))
                 result = float(einzelpreis.data) * float(anzahl.data)
-                results[i] = result
+                results[i] = result 
                 item_args.append(beschreibung.data)
                 item_args.append(str(anzahl.data))
                 item_args.append(str(einzelpreis.data))
-                item_args.append(str(result))
+                item_args.append('{:.2f}'.format(result)) #todo data type anpassen
             final_result = 0
             for r in results:
-                final_result = final_result + results[r]
-            brutto = final_result * 1.19
-            mwst = final_result * 0.19
+                final_result = final_result + results[r] 
+            brutto = '{:.2f}'.format(final_result * 1.19) #todo data type anpassen
+            mwst = '{:.2f}'.format(final_result * 0.19)  #todo data type anpassen
+            netto = '{:.2f}'.format(final_result)
 
         # um unter kunde die client.id speichern zu können; Sonst wird Client nicht unter Admin/Invoice angezeigt  # noqa: E501
         client = ClientModel.query.filter(ClientModel.name == form.client.data).first()
@@ -106,7 +107,7 @@ def neue_rechnung_erzeugen():
             strasse=strasse,
             plz=str(plz),
             ort=ort,
-            netto=str(final_result),
+            netto=str(netto),
             mwst=str(mwst),
             brutto=str(brutto),
             today=today,
@@ -114,9 +115,9 @@ def neue_rechnung_erzeugen():
             rechnungsnummer_output=rechnungsnummer_output
             )
         
-        # todo zu reakktivieren!
+        # todo zu reaktivieren!
         today_file = datetime.now().strftime('%y-%m-%d')
-        pdf_repo = "./reports/" + client_name.replace(' ','').lower() + "_" + today_file + ".pdf"  # noqa: E501
+        pdf_repo = "./reports/" + client_name.replace(' ','').lower() + "_" + rechnungsnummer_output  + "_" + today_file + ".pdf"  # noqa: E501
         print_invoice(rendered, pdf_repo)
         
 

@@ -5,9 +5,9 @@
 <div class="container">
 
     <table class="table">
-        <th>Position</th>
-        <th>Einzelpreis</th>
-        <th>Anzahl</th>
+        <th class="table__head-position">Position</th>
+        <th class="table__head-einzelpreis">Einzelpreis</th>
+        <th class="table__head-anzahl">Anzahl</th>
         <th>Zur Rechnung?</th>
     
         <form method="POST", action="/neue-rechnung-erzeugen">
@@ -15,10 +15,10 @@
         
             {% for item in items %}
             <tr>
-                <td>{{ form['beschreibung' + item.id|string](value=item.beschreibung) }}</td>
-                <td>{{ form['stueckpreis' + item.id|string](value=item.stueckpreis) }}</td>
-                <td>{{ form['anzahl' + item.id|string] }}</td>
-                <td>{{ form['zur_rechnung' + item.id|string] }}</td>
+                <td class="table__description">{{ form['beschreibung' + item.id|string](value=item.beschreibung) }}</td>
+                <td class="table__stueckpreis">{{ form['stueckpreis' + item.id|string](value=item.stueckpreis) }} €</td>
+                <td class="table__anzahl">{{ form['anzahl' + item.id|string] }}</td>
+                <td class="table__zur-rechnung">{{ form['zur_rechnung' + item.id|string] }}</td>
                 
             </tr>    
             {% endfor %}

@@ -30,7 +30,8 @@ platzhalter
 ## todo
 
 - fortlaufende Rechnungsnummer
-- Sidebar
-- Bilder einbauen
-- Layout Korrekturen (Farben, Linien, Fett)
 - Währungsformat?
+- security: login
+- Navigation
+- API
+- JS Abfrage API

@@ -1,0 +1,44 @@
+.table {
+    &__head-position {
+        text-align: left;
+    }
+
+    &__head-einzelpreis {
+        text-align: right;
+    }
+
+    &__head-anzahl {
+        text-align: right;
+    }
+
+    & > * {
+        input {
+            border: none;
+            width: 90%;
+        }
+    }
+
+    &__description {
+        width: 50rem;
+    }
+
+    &__stueckpreis {
+        width: 10rem;
+
+        input {
+            text-align: right;
+        }
+    }
+
+    &__anzahl {
+        width: 5rem;
+
+        input {
+            text-align: right;
+        }
+    }
+
+    &__zur-rechnung {
+        width: 5rem;
+    }
+}

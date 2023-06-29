@@ -37,7 +37,7 @@ class ItemModel(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     beschreibung = db.Column(db.Text(200))
-    stueckpreis = db.Column(db.Float)
+    stueckpreis = db.Column(db.Numeric(7,2))
     anzahl = db.Column(db.Numeric)
     zur_rechnung = db.Column(db.Boolean)
 
