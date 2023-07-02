@@ -137,11 +137,12 @@ body {
   width: 10rem; }
   .table__stueckpreis input {
     text-align: right; }
+  .table__stueckpreis input::-webkit-outer-spin-button,
+  .table__stueckpreis input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0; }
 
 .table__anzahl {
   width: 5rem; }
   .table__anzahl input {
     text-align: right; }
-
-.table__zur-rechnung {
-  width: 5rem; }

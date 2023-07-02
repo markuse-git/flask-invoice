@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 from flask import render_template
 from flask_smorest import Blueprint
-from wtforms import StringField, BooleanField, IntegerField, SelectField, DecimalField
+from wtforms import StringField, IntegerField, SelectField, DecimalField
 
 from models import ClientModel, ItemModel, InvoiceModel
 from forms import ItemForm
@@ -35,7 +35,6 @@ def neue_rechnung_erzeugen():
         setattr(ItemForm, 'beschreibung' + str(item.id), StringField(item.beschreibung))
         setattr(ItemForm, 'stueckpreis' + str(item.id), DecimalField(item.stueckpreis))
         setattr(ItemForm, 'anzahl' + str(item.id), IntegerField(item.anzahl, default=0))
-        setattr(ItemForm, 'zur_rechnung' + str(item.id), BooleanField(item.zur_rechnung, default=False))  # noqa: E501
 
     form = ItemForm()
 
