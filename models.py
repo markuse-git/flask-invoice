@@ -27,7 +27,7 @@ class InvoiceModel(db.Model):
 
     kunde = db.Column(db.Integer, db.ForeignKey('client.id'))
 
-    items = db.relationship('ItemModel', secondary='items_invoices', backref='invoice')
+    items = db.relationship('ItemModel', secondary='items_invoices', backref='invoice')  # noqa: E501
 
     def __repr__(self) -> str:
         return self.id
@@ -39,6 +39,8 @@ class ItemModel(db.Model):
     beschreibung = db.Column(db.Text(200))
     stueckpreis = db.Column(db.Numeric(7,2))
     anzahl = db.Column(db.Numeric)
+
+    # invoices = db.relationship('InvoiceModel', secondary='items_invoices', backref='item', lazy='dynamic')  # noqa: E501
 
     def __repr__(self) -> str:
         return self.id
