@@ -1,0 +1,6 @@
+.col-betrag {
+    color: green;
+    &::after {
+        content: '€';
+    }
+}
