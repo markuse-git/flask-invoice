@@ -1,3 +1,4 @@
+@charset "UTF-8";
 *,
 *::after,
 *::before {
@@ -137,12 +138,19 @@ body {
   width: 10rem; }
   .table__stueckpreis input {
     text-align: right; }
-  .table__stueckpreis input::-webkit-outer-spin-button,
-  .table__stueckpreis input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0; }
+    .table__stueckpreis input::-webkit-outer-spin-button, .table__stueckpreis input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0; }
 
 .table__anzahl {
   width: 5rem; }
   .table__anzahl input {
     text-align: right; }
+    .table__anzahl input[type=number]::-webkit-inner-spin-button, .table__anzahl input[type=number]::-webkit-outer-spin-button {
+      opacity: 1; }
+
+tbody .col-betrag, tbody .col-stueckpreis {
+  color: green;
+  text-align: right; }
+  tbody .col-betrag::after, tbody .col-stueckpreis::after {
+    content: '€'; }

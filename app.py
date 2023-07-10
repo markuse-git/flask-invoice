@@ -18,6 +18,7 @@ def create_app():
     app.config['DEBUG'] = True
 
     admin = Admin(app, template_mode='bootstrap3')
+    # admin = Admin(app, base_template='/templates/admin/master.html')
     admin.add_view(ClientView(ClientModel, db.session))
     admin.add_view(ItemView(ItemModel, db.session))
     admin.add_view(InvoiceView(InvoiceModel, db.session))
