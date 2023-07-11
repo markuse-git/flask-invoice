@@ -27,13 +27,13 @@
 
         input {
             text-align: right;
-        }
 
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
+            &::-webkit-outer-spin-button,
+            &::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+        }        
     }
 
     &__anzahl {
@@ -41,7 +41,12 @@
 
         input {
             text-align: right;
-        }
+
+            &[type=number]::-webkit-inner-spin-button, 
+            &[type=number]::-webkit-outer-spin-button {
+                opacity: 1;
+            }
+        }        
     }
 
 }

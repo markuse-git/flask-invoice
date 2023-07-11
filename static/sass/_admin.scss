@@ -1,6 +1,9 @@
-.col-betrag {
-    color: green;
-    &::after {
-        content: '€';
+tbody{
+    .col-betrag, .col-stueckpreis {
+        color: green;
+        text-align: right;
+        &::after {
+            content: '€';
+        }
     }
 }

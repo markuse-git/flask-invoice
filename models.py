@@ -22,7 +22,7 @@ class InvoiceModel(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     datum = db.Column(db.Date)
-    betrag = db.Column(db.Numeric)    
+    betrag = db.Column(db.Numeric(7,2))    
     beglichen = db.Column(db.Boolean)
 
     kunde = db.Column(db.Integer, db.ForeignKey('client.id'))
