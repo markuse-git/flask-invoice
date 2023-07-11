@@ -9,7 +9,7 @@ class ItemView(ModelView):
 
 class InvoiceView(ModelView):
     # column_hide_backrefs = False # Discord antwort
-    # form_columns = ["kunde", "datum", "betrag", "beglichen", "items"] # Discord antwort
+    # form_columns = ["kunde", "datum", "betrag", "beglichen", "items"] # Discord antwort  # noqa: E501
     #! Discort Lines führen zu Fehler bei admin/invoicemodel 
     #! TypeError: __str__ returned non-string (type int)
     form_excluded_columns = ['items']
