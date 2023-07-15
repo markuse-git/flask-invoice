@@ -1,0 +1,87 @@
+.login-container{
+    width: 80%;
+    margin: 20px auto;
+}
+
+.login{
+    &__form{
+        #submit{
+            background-color: green;
+            color: white;
+            padding: 5px 20px;
+            border-radius: 10%;
+            border: none;
+            margin: 20px 0;
+        }
+    }
+
+    &__inputs{
+        width: 40%;
+        height: 100px;
+        // background-color: grey;
+
+        display: grid;
+        grid-template-columns: 100%;
+        justify-items: end;
+        align-items: center;
+        gap: 0px;
+        justify-content: start;
+        align-content: stretch;
+
+        p{
+            // background-color: yellow;
+            width: 100%;
+
+            display: grid;
+            // justify-content: space-between;
+            grid-template-columns: 150px 1fr;
+            
+            input{
+                box-shadow: 0 15px 30px rgba($color: #000000, $alpha: .2);
+            }
+
+            label{
+                font-weight: bold;
+            }
+        }
+
+    }
+
+    &__title{
+        margin-bottom: 20px;;
+    }
+}
+
+.security-menu{
+    width: 40%;
+
+    &__title{
+        margin-bottom: 20px;
+    }
+
+    &__list{
+        list-style: none;
+        text-decoration: none;
+
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__item{
+        text-decoration: none;
+    }
+
+    &__link{
+        text-decoration: none;
+        color: black;
+
+        &:hover,
+        &:active{
+            // background-position: 100%;
+            color: white;
+            background-color: black;
+            padding: 5px;
+            transform: rotate(6deg);
+        }
+    }
+}
