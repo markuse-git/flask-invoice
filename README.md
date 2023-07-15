@@ -1,10 +1,6 @@
 # App zur Erzeugung und Suche von Rechnungen
-  
-- Positionssummen
-- Rechnungssumme
-- MwSt
 
-- Form zum Suchen von Rechnugnen, API?
+platzhalter  
 
 ## offene Fragen
 
@@ -17,21 +13,6 @@ platzhalter
 - Nach Rechnungs-Suche wird die Summe der Rechnungsbeträge ausgegeben
 - Rechnungssuche nach Datum (Jahr, Monat), Kunde, beglichen?
 
-## Fixes
+## Anmerkungen
 
-- In der Tabelle items_invoices werden keine Einträge gesetzt
-
-## Modifikationen
-
-- Neue Rechnung erzeugen -> Feld 'Zur Rechnung?' wird eigentlich nicht benötigt. Hinzugefügt wird wenn Anzahl > 0
-- Das Feld 'Zur Rechnung' muss entsprechend nicht in das ItemModel; dann auch nicht unter Admin/Item
-- Das Feld 'Anzahl' wird in der DB (Items) eigentlich nicht benötigt
-
-## todo
-
-- fortlaufende Rechnungsnummer
-- Währungsformat?
-- security: login
-- Navigation
-- API
-- JS Abfrage API
+- Invoice Model im Admin Bereich wird NUR dafür benötigt Rechnungen ggf. als beglichen zu kennzeichnen

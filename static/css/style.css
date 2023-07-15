@@ -154,3 +154,57 @@ tbody .col-betrag, tbody .col-stueckpreis {
   text-align: right; }
   tbody .col-betrag::after, tbody .col-stueckpreis::after {
     content: '€'; }
+
+.login-container {
+  width: 80%;
+  margin: 20px auto; }
+
+.login__form #submit {
+  background-color: green;
+  color: white;
+  padding: 5px 20px;
+  border-radius: 10%;
+  border: none;
+  margin: 20px 0; }
+
+.login__inputs {
+  width: 40%;
+  height: 100px;
+  display: grid;
+  grid-template-columns: 100%;
+  justify-items: end;
+  align-items: center;
+  gap: 0px;
+  justify-content: start;
+  align-content: stretch; }
+  .login__inputs p {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 150px 1fr; }
+    .login__inputs p input {
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); }
+    .login__inputs p label {
+      font-weight: bold; }
+
+.login__title {
+  margin-bottom: 20px; }
+
+.security-menu {
+  width: 40%; }
+  .security-menu__title {
+    margin-bottom: 20px; }
+  .security-menu__list {
+    list-style: none;
+    text-decoration: none;
+    display: flex;
+    justify-content: space-between; }
+  .security-menu__item {
+    text-decoration: none; }
+  .security-menu__link {
+    text-decoration: none;
+    color: black; }
+    .security-menu__link:hover, .security-menu__link:active {
+      color: white;
+      background-color: black;
+      padding: 5px;
+      transform: rotate(6deg); }
