@@ -17,7 +17,6 @@ rechnungsnr = 1181
 
 @blp.route('/')
 def index():
-    # return 'das steht schon mal'
     return render_template('index.html')
 
 @blp.route('/neue-rechnung-erzeugen', methods=['GET','POST'])
