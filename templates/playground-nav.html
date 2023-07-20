@@ -1,0 +1,19 @@
+<div class="playground">
+    <input type="checkbox" class="playground__checkbox" id="navi-toggle">
+
+    <label for="navi-toggle" class="playground__button">
+        <span class="playground__icon">&nbsp;</span>
+    </label>
+
+    <div class="playground__background">&nbsp;</div>
+
+    <nav class="playground__nav">
+        <ul class="playground__list">
+            <li class="playground__item"><a href="{{ url_for('views.index') }}" class="playground__link">Home</a></li>
+            <li class="playground__item"><a href="{{ url_for('views.neue_rechnung_erzeugen') }}" class="playground__link">Neue Rechnung</a></li>
+            <li class="playground__item"><a href="{{ url_for('security.login') }}" class="playground__link">Login</a></li>
+            <li class="playground__item"><a href="{{ url_for('admin.index') }}" class="playground__link">Admin</a></li>
+            <li class="playground__item"><a href="#" class="playground__link"><span>05</span>Book now</a></li>
+            </ul>
+    </nav>
+</div>

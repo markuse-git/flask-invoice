@@ -239,9 +239,122 @@ tbody .col-betrag, tbody .col-stueckpreis {
     text-decoration: none; }
   .security-menu__link {
     text-decoration: none;
-    color: black; }
+    color: black;
+    transition: all .2s;
+    display: inline-block; }
     .security-menu__link:hover, .security-menu__link:active {
       color: white;
       background-color: black;
       padding: 5px;
       transform: rotate(6deg); }
+
+.playground__checkbox {
+  display: none; }
+
+.playground__button {
+  background-color: aqua;
+  height: 7rem;
+  width: 7rem;
+  position: fixed;
+  top: 6rem;
+  right: 6rem;
+  border-radius: 50%;
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  z-index: 20;
+  text-align: center; }
+
+.playground__background {
+  height: 6rem;
+  width: 6rem;
+  border-radius: 50%;
+  position: fixed;
+  top: 6.5rem;
+  right: 6.5rem;
+  z-index: 10;
+  background-image: radial-gradient(#7ed56f, #28b485);
+  transition: transform 0.8s cubic-bezier(0.86, 0, 0.07, 1); }
+
+.playground__nav {
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 15;
+  opacity: 0;
+  width: 0;
+  transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+
+.playground__list {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  list-style: none;
+  text-align: center;
+  width: 100%; }
+
+.playground__item {
+  margin: 1rem; }
+
+.playground__link:link, .playground__link:visited {
+  display: inline-block;
+  font-size: 3rem;
+  font-weight: 300;
+  padding: 1rem 2rem;
+  color: white;
+  text-decoration: none;
+  text-transform: uppercase;
+  background-image: linear-gradient(120deg, transparent 0%, transparent 50%, white 50%);
+  background-size: 220%;
+  transition: all .4s; }
+  .playground__link:link span, .playground__link:visited span {
+    margin-right: 1.5rem;
+    display: inline-block; }
+
+.playground__link:hover, .playground__link:active {
+  background-position: 100%;
+  color: #55c57a;
+  transform: translateX(1rem); }
+
+.playground__checkbox:checked ~ .playground__background {
+  transform: scale(80); }
+
+.playground__checkbox:checked ~ .playground__nav {
+  opacity: 1;
+  width: 100%; }
+
+.playground__icon {
+  position: relative;
+  margin-top: 3.5rem; }
+  .playground__icon, .playground__icon::before, .playground__icon::after {
+    width: 3rem;
+    height: 2px;
+    background-color: grey;
+    display: inline-block; }
+  .playground__icon::before, .playground__icon::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    transition: all .2s; }
+  .playground__icon::before {
+    top: -.8rem; }
+  .playground__icon::after {
+    top: .8rem; }
+
+.playground__button:hover .playground__icon::before {
+  top: -1rem; }
+
+.playground__button:hover .playground__icon::after {
+  top: 1rem; }
+
+.playground__checkbox:checked + .playground__button .playground__icon {
+  background-color: transparent; }
+
+.playground__checkbox:checked + .playground__button .playground__icon::before {
+  top: 0;
+  transform: rotate(135deg); }
+
+.playground__checkbox:checked + .playground__button .playground__icon::after {
+  top: 0;
+  transform: rotate(-135deg); }
