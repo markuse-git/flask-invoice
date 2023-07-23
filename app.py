@@ -1,11 +1,12 @@
 from flask import Flask
 from flask_migrate import Migrate
 from flask_admin import Admin
+# from flask_admin.contrib.sqla import ModelView
 from flask_security import Security
 
 from views import blp as ViewsBlueprint
-from admin import ClientView, InvoiceView, ItemView
-from models import ClientModel, InvoiceModel, ItemModel, user_datastore
+from admin import ClientView, InvoiceView, ItemView, RolesView
+from models import ClientModel, InvoiceModel, ItemModel, user_datastore, Role
 
 from db import db
 
@@ -24,9 +25,11 @@ def create_app():
 
     admin = Admin(app, template_mode='bootstrap3')
     # admin = Admin(app, base_template='/templates/admin/master.html')
-    admin.add_view(ClientView(ClientModel, db.session))
-    admin.add_view(ItemView(ItemModel, db.session))
-    admin.add_view(InvoiceView(InvoiceModel, db.session))
+    admin.add_view(ClientView(ClientModel, db.session, 'Clients'))
+    admin.add_view(ItemView(ItemModel, db.session, 'Items'))
+    admin.add_view(InvoiceView(InvoiceModel, db.session, 'Invoices'))
+    admin.add_view(RolesView(Role, db.session, 'Roles'))
+    # admin.add_view(ModelView(roles_users, db.session))
 
     Security(app, user_datastore)
 
