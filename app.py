@@ -1,12 +1,11 @@
 from flask import Flask
 from flask_migrate import Migrate
 from flask_admin import Admin
-# from flask_admin.contrib.sqla import ModelView
 from flask_security import Security
 
 from views import blp as ViewsBlueprint
-from admin import ClientView, InvoiceView, ItemView, RolesView
-from models import ClientModel, InvoiceModel, ItemModel, user_datastore, Role
+from admin import ClientView, InvoiceView, ItemView, RolesView, UserView
+from models import ClientModel, InvoiceModel, ItemModel, user_datastore, Role, User  # noqa: E501
 
 from db import db
 
@@ -29,7 +28,7 @@ def create_app():
     admin.add_view(ItemView(ItemModel, db.session, 'Items'))
     admin.add_view(InvoiceView(InvoiceModel, db.session, 'Invoices'))
     admin.add_view(RolesView(Role, db.session, 'Roles'))
-    # admin.add_view(ModelView(roles_users, db.session))
+    admin.add_view(UserView(User, db.session, 'Users'))
 
     Security(app, user_datastore)
 

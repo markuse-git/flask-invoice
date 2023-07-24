@@ -16,3 +16,7 @@ class InvoiceView(ModelView):
 
 class RolesView(ModelView):
     pass
+
+class UserView(ModelView):
+    column_list = ('email', 'active', 'roles')
+
