@@ -55,16 +55,26 @@ class ItemModel(db.Model):
 
 # FLASK SECURITY
 
-roles_users = db.Table(
-    'roles_users',
-    db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
-    db.Column('role_id', db.Integer(), db.ForeignKey('role.id'))
-)
+# roles_users = db.Table(
+#     'roles_users',
+#     db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
+#     db.Column('role_id', db.Integer(), db.ForeignKey('role.id'))
+# )
+
+class Roles_Users(db.Model):
+    __tablename__ = 'roles_users'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    role_id = db.Column(db.Integer, db.ForeignKey('role.id'))
 
 class Role(db.Model, RoleMixin):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(80), unique=True)
     descsription = db.Column(db.String(255))
+
+    def __repr__(self) -> str:
+        return self.name
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer(), primary_key=True)
@@ -74,5 +84,7 @@ class User(db.Model, UserMixin):
     confirmed_at = db.Column(db.DateTime())
 
     roles = db.relationship('Role', secondary='roles_users', backref=db.backref('users', lazy='dynamic'))  # noqa: E501
+
+
 
 user_datastore = SQLAlchemyUserDatastore(db, User, Role)

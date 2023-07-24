@@ -13,3 +13,10 @@ class InvoiceView(ModelView):
     #! Discort Lines führen zu Fehler bei admin/invoicemodel 
     #! TypeError: __str__ returned non-string (type int)
     form_excluded_columns = ['items']
+
+class RolesView(ModelView):
+    pass
+
+class UserView(ModelView):
+    column_list = ('email', 'active', 'roles')
+
