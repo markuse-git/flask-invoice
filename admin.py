@@ -1,5 +1,12 @@
 from flask_admin.contrib.sqla import ModelView
 
+
+# um die Datum Anzeige in Admin/Invoices zu verändern
+# view, context wird benötigt, damit die Anzeige auf Admin/Invoices funktioniert
+def date_formatter(view, context, model, name): 
+    datetime_value = getattr(model, name)
+    return datetime_value.strftime('%Y-%m-%d')
+
 class ClientView(ModelView):
     form_excluded_columns = ['invoices']
     
@@ -13,6 +20,11 @@ class InvoiceView(ModelView):
     #! Discort Lines führen zu Fehler bei admin/invoicemodel 
     #! TypeError: __str__ returned non-string (type int)
     form_excluded_columns = ['items']
+
+    # Um die Anzeige in Admin/Invoices zu verändern. 
+    column_formatters = {
+        'datum': date_formatter
+    }
 
 class RolesView(ModelView):
     pass

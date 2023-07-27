@@ -4,8 +4,9 @@ from flask import render_template
 from flask_smorest import Blueprint
 from wtforms import StringField, IntegerField, SelectField, DecimalField
 from flask_security import roles_accepted
+from sqlalchemy import desc
 
-from models import ClientModel, ItemModel, InvoiceModel
+from models import ClientModel, ItemModel, InvoiceModel, Items_Invoices
 from forms import ItemForm
 from db import db
 from convert2pdf import print_invoice
@@ -43,6 +44,9 @@ def neue_rechnung_erzeugen():
     if form.validate_on_submit():
         results = {}
         item_args = []
+
+        item_ids = [] # weil der db Eintrag erst gemacht werden kann, wenn es einen Eintrag für die Invoice ID gibt  # noqa: E501
+
         today = datetime.now().strftime('%d.%m.%Y')
         target_date = datetime.now() + timedelta(days=10)
         target_output = target_date.strftime('%d.%m.%Y')
@@ -55,6 +59,12 @@ def neue_rechnung_erzeugen():
                 einzelpreis = getattr(form, 'stueckpreis' + str(i+1))
                 beschreibung = getattr(form, 'beschreibung' + str(i+1))
                 anzahl = getattr(form, 'anzahl' + str(i+1))
+
+                # items_invoices: aktuelle ID des Items suchen
+                item_id = ItemModel.query.filter(ItemModel.beschreibung == beschreibung.data).first()  # noqa: E501
+                if item_id:
+                    item_ids.append(item_id.id)
+
                 result = float(einzelpreis.data) * float(anzahl.data)
                 results[i] = result 
                 item_args.append(beschreibung.data)
@@ -84,6 +94,18 @@ def neue_rechnung_erzeugen():
         )
         db.session.add(new_invoice)
         db.session.commit()
+
+        # die ID der soeben gespeicherten Invoice suchen
+        invoice_id = InvoiceModel.query.order_by(desc(InvoiceModel.datum)).first()
+
+        # für jedes Item einen eigenen Eintrag in der association table machen
+        for item_id in item_ids:
+            new_items_invoices = Items_Invoices(
+                item_id = item_id,
+                invoice_id = invoice_id.id
+            )
+            db.session.add(new_items_invoices)
+            db.session.commit()
 
         #* Vorläufig zugunsten der html Rechnung deaktiviert
         # create_pdf(
@@ -120,5 +142,4 @@ def neue_rechnung_erzeugen():
         pdf_repo = "./reports/" + client_name.replace(' ','').lower() + "_" + rechnungsnummer_output  + "_" + today_file + ".pdf"  # noqa: E501
         print_invoice(rendered, pdf_repo)
         
-
     return render_template('neue-rechnung.html', form=form, items=items, clients=clients, output=output)  # noqa: E501
