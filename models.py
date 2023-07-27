@@ -19,17 +19,18 @@ class ClientModel(db.Model):
     def __repr__(self) -> str:
         return self.name
     
-db.Table(
-    'items_invoices',
-    db.Column('item_id', db.Integer, db.ForeignKey('item.id')),
-    db.Column('invoice_id', db.Integer, db.ForeignKey('invoice.id'))
-)
+class Items_Invoices(db.Model):
+    __tablename__ = 'items_invoices'
+
+    id = db.Column(db.Integer, primary_key=True)
+    item_id = db.Column(db.Integer, db.ForeignKey('item.id'))
+    invoice_id = db.Column(db.Integer, db.ForeignKey('invoice.id'))
     
 class InvoiceModel(db.Model):
     __tablename__ = 'invoice'
 
     id = db.Column(db.Integer, primary_key=True)
-    datum = db.Column(db.Date)
+    datum = db.Column(db.DateTime)
     betrag = db.Column(db.Numeric(7,2))    
     beglichen = db.Column(db.Boolean)
 
@@ -55,12 +56,6 @@ class ItemModel(db.Model):
 
 # FLASK SECURITY
 
-# roles_users = db.Table(
-#     'roles_users',
-#     db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
-#     db.Column('role_id', db.Integer(), db.ForeignKey('role.id'))
-# )
-
 class Roles_Users(db.Model):
     __tablename__ = 'roles_users'
 
@@ -84,7 +79,6 @@ class User(db.Model, UserMixin):
     confirmed_at = db.Column(db.DateTime())
 
     roles = db.relationship('Role', secondary='roles_users', backref=db.backref('users', lazy='dynamic'))  # noqa: E501
-
 
 
 user_datastore = SQLAlchemyUserDatastore(db, User, Role)
