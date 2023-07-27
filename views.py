@@ -14,8 +14,6 @@ from convert2pdf import print_invoice
 
 blp = Blueprint('views', __name__, description="actions on views")
 
-rechnungsnr = 1181
-
 @blp.route('/')
 def index():
     return render_template('index.html')
@@ -50,9 +48,17 @@ def neue_rechnung_erzeugen():
         today = datetime.now().strftime('%d.%m.%Y')
         target_date = datetime.now() + timedelta(days=10)
         target_output = target_date.strftime('%d.%m.%Y')
-        global rechnungsnr
-        rechnungsnr += 1
-        rechnungsnummer_output = datetime.now().strftime('%Y%m') + str(rechnungsnr)
+        
+        # um die Rechnungsnummer auf dem pdf fortlaufend zu machen
+        invoices = InvoiceModel.query.order_by(desc(InvoiceModel.datum)).first()
+        if invoices:
+            last_invoice_id = invoices.id
+        else:
+            last_invoice_id = 0
+
+        new_invoice_id = last_invoice_id + 1182 # um bei 1182 anzufangen
+        rechnungsnummer_output = datetime.now().strftime('%Y%m') + str(new_invoice_id)
+        
         for i in range(len(items)):
             anzahl = getattr(form, 'anzahl' + str(i+1))
             if anzahl.data > 0:
