@@ -192,6 +192,9 @@ tbody .col-betrag, tbody .col-stueckpreis {
   tbody .col-betrag::after, tbody .col-stueckpreis::after {
     content: '€'; }
 
+thead .list-checkbox-column {
+  width: 3.1rem; }
+
 .login-container {
   width: 80%;
   margin: 20px auto; }
