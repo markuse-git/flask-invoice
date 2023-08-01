@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+{% include "menu.html" %}
+{% include "playground-nav.html" %}
+
+<form action="/invoices" class="invoices-form" method="POST">
+    <div class="invoices-form__inputs">
+        {{ form.csrf_tokel }}
+        <div class="invoices-form__chunks">
+            {{ form.client.label(class="invoices-form__label") }}
+            {{ form.client }}
+        </div>
+        <div class="invoices-form__chunks">
+            {{ form.year.label(class="invoices-form__label") }}
+            {{ form.year }}
+        </div>
+        <div class="invoices-form__chunks">
+            {{ form.month.label(class="invoices-form__label") }}
+            {{ form.month }}
+        </div>
+        <div class="invoices-form__chunks">
+            {{ form.cleared.label(class="invoices-form__label") }}
+            {{ form.cleared }}    
+        </div>
+    </div>
+    <div class="invoices-form__btn">
+        <button class="invoices-form__btn-btn">Submit</button>
+    </div>
+</form>
+
+</div>
+
+{% endblock %}

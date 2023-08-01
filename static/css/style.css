@@ -361,3 +361,23 @@ thead .list-checkbox-column {
 .playground__checkbox:checked + .playground__button .playground__icon::after {
   top: 0;
   transform: rotate(-135deg); }
+
+.invoices-form {
+  width: 60%;
+  display: flex;
+  justify-content: space-between; }
+  .invoices-form__inputs {
+    width: 80%;
+    display: flex;
+    justify-content: space-between; }
+  .invoices-form__label {
+    margin-right: 1rem; }
+  .invoices-form__btn-btn {
+    color: white;
+    padding: .5rem 2rem;
+    background-color: darkgreen;
+    border-radius: 2rem;
+    border: none;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2); }
+    .invoices-form__btn-btn:hover {
+      background-color: green; }
