@@ -2,17 +2,37 @@ from datetime import datetime, timedelta
 
 from flask import render_template
 from flask_smorest import Blueprint
-from wtforms import StringField, IntegerField, SelectField, DecimalField
+from wtforms import StringField, IntegerField, SelectField, DecimalField, BooleanField
 from flask_security import roles_accepted
 from sqlalchemy import desc
 
 from models import ClientModel, ItemModel, InvoiceModel, Items_Invoices
-from forms import ItemForm
+from forms import ItemForm, InvoicesForm
 from db import db
 from convert2pdf import print_invoice
 
 
 blp = Blueprint('views', __name__, description="actions on views")
+
+
+def get_client_names():
+    clients = ClientModel.query.all()
+        
+    clients_names = []
+    for client in clients:
+        clients_names.append(client.name)
+
+    return clients_names
+
+def get_invoices_dates():
+    invoices = InvoiceModel.query.all()
+
+    invoices_dates = []
+    for invoice in invoices:
+        if invoice.datum.year not in invoices_dates:
+            invoices_dates.append(invoice.datum.year)
+
+    return invoices_dates
 
 @blp.route('/')
 def index():
@@ -25,9 +45,7 @@ def neue_rechnung_erzeugen():
     items = ItemModel.query.all()    
     clients = ClientModel.query.all()
     
-    clients_names = []
-    for client in clients:
-        clients_names.append(client.name)
+    clients_names = get_client_names()
 
     ItemForm.client = SelectField('client', choices=clients_names)
 
@@ -149,3 +167,22 @@ def neue_rechnung_erzeugen():
         print_invoice(rendered, pdf_repo)
         
     return render_template('neue-rechnung.html', form=form, items=items, clients=clients, output=output)  # noqa: E501
+
+
+@blp.route('/invoices', methods=['GET','POST'])
+def invoices():
+
+    clients_names = get_client_names()
+    clients_names.append('All')
+    invoices_dates = get_invoices_dates()
+    invoices_dates.append('All')
+    months = ['All', 'Jan', 'Feb', 'Mrz', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez']  # noqa: E501
+    
+    InvoicesForm.client = SelectField('Client', choices=clients_names, default='All')
+    InvoicesForm.year = SelectField('Year', choices=invoices_dates, default='All')
+    InvoicesForm.month = SelectField('Month', choices=months, default='All')
+    InvoicesForm.cleared = BooleanField('Cleared')
+
+    form = InvoicesForm()
+
+    return render_template('invoices.html', form=form)
