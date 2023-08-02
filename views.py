@@ -185,4 +185,21 @@ def invoices():
 
     form = InvoicesForm()
 
-    return render_template('invoices.html', form=form)
+
+    #? irgendwie müsste die query im durchlauf durch das Dict erzeugt werden 
+
+    qstrg = {}
+
+    if form.validate_on_submit():
+        if form.client.data != 'All':
+            qstrg['client'] = form.client.data
+        if form.year.data != 'All':
+            qstrg['year'] = form.year.data
+        if form.month.data != 'All':
+            qstrg['month'] = form.month.data
+        if form.cleared.data is True:
+            qstrg['cleared'] = form.cleared.data
+
+
+
+    return render_template('invoices.html', form=form, qstrg=qstrg)
