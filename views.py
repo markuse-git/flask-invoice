@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+import requests
 
 from flask import render_template
 from flask_smorest import Blueprint
@@ -186,20 +187,34 @@ def invoices():
     form = InvoicesForm()
 
 
-    #? irgendwie müsste die query im durchlauf durch das Dict erzeugt werden 
-
-    qstrg = {}
+    #! Es muss noch übersetzt werden von Client.name -> Client.id
+    #! und von month str -> int
 
     if form.validate_on_submit():
-        if form.client.data != 'All':
-            qstrg['client'] = form.client.data
-        if form.year.data != 'All':
-            qstrg['year'] = form.year.data
-        if form.month.data != 'All':
-            qstrg['month'] = form.month.data
-        if form.cleared.data is True:
-            qstrg['cleared'] = form.cleared.data
 
+        qstrg = {}
 
+        if form.validate_on_submit():
+            if form.client.data != 'All':
+                qstrg['client'] = form.client.data
+            if form.year.data != 'All':
+                qstrg['year'] = form.year.data
+            if form.month.data != 'All':
+                qstrg['month'] = form.month.data
+            if form.cleared.data is True:
+                qstrg['cleared'] = form.cleared.data
 
-    return render_template('invoices.html', form=form, qstrg=qstrg)
+        url = 'http://127.0.0.1:5000/api/invoices?'
+        count = 0
+        for key, value in qstrg.items():
+            if count == 0:
+                url += key + '=' + str(value)
+                count += 1
+            else:
+                url += '&' + key + '=' + str(value)
+            
+        # print(url)
+
+    
+
+    return render_template('invoices.html', form=form)
