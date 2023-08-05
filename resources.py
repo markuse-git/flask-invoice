@@ -36,11 +36,10 @@ class Invoices_api(Resource):
 
         if year:
             # invoices = invoices.filter(InvoiceModel.datum.like(f'%{year}%')).all()
-            invoices = invoices.filter(extract('year', InvoiceModel.datum) == year).all()
+            invoices = invoices.filter(extract('year', InvoiceModel.datum) == year).all()  # noqa: E501
 
         if month:
-            invoices = invoices.filter(extract('month', InvoiceModel.datum) == month).all()
-            # jetzt geht z.B.: month=6
+            invoices = invoices.filter(extract('month', InvoiceModel.datum) == month).all()  # noqa: E501
 
         output = []
 

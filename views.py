@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta
-import requests
 
 from flask import render_template
 from flask_smorest import Blueprint
@@ -186,9 +185,22 @@ def invoices():
 
     form = InvoicesForm()
 
+    months = {
+            'Jan':1,
+            'Feb':2,
+            'Mrz':3,
+            'Apr':4,
+            'Mai':5,
+            'Jun':6,
+            'Jul':7,
+            'Aug':8,
+            'Sep':9,
+            'Okt':10,
+            'Nov':11,
+            'Dez':12,
+        }
 
-    #! Es muss noch übersetzt werden von Client.name -> Client.id
-    #! und von month str -> int
+    #! Es muss noch Fehler abgefangen werden, wenn Suche keine Treffer (month, clear)
 
     if form.validate_on_submit():
 
@@ -196,11 +208,12 @@ def invoices():
 
         if form.validate_on_submit():
             if form.client.data != 'All':
-                qstrg['client'] = form.client.data
+                client = ClientModel.query.filter_by(name=form.client.data).first()
+                qstrg['client'] = client.id
             if form.year.data != 'All':
                 qstrg['year'] = form.year.data
             if form.month.data != 'All':
-                qstrg['month'] = form.month.data
+                qstrg['month'] = months[form.month.data]
             if form.cleared.data is True:
                 qstrg['cleared'] = form.cleared.data
 
@@ -213,7 +226,7 @@ def invoices():
             else:
                 url += '&' + key + '=' + str(value)
             
-        # print(url)
+        print(url)
 
     
 
