@@ -5,6 +5,7 @@ from flask_smorest import Blueprint
 from wtforms import StringField, IntegerField, SelectField, DecimalField, BooleanField
 from flask_security import roles_accepted
 from sqlalchemy import desc
+from urllib.parse import urlencode
 
 from models import ClientModel, ItemModel, InvoiceModel, Items_Invoices
 from forms import ItemForm, InvoicesForm
@@ -200,33 +201,22 @@ def invoices():
             'Dez':12,
         }
 
-    #! Es muss noch Fehler abgefangen werden, wenn Suche keine Treffer (month, clear)
+    qstrg = {}
 
     if form.validate_on_submit():
+        if form.client.data != 'All':
+            client = ClientModel.query.filter_by(name=form.client.data).first()
+            qstrg['client'] = client.id
+        if form.year.data != 'All':
+            qstrg['year'] = form.year.data
+        if form.month.data != 'All':
+            qstrg['month'] = months[form.month.data]
+        if form.cleared.data is True:
+            qstrg['clear'] = form.cleared.data
 
-        qstrg = {}
-
-        if form.validate_on_submit():
-            if form.client.data != 'All':
-                client = ClientModel.query.filter_by(name=form.client.data).first()
-                qstrg['client'] = client.id
-            if form.year.data != 'All':
-                qstrg['year'] = form.year.data
-            if form.month.data != 'All':
-                qstrg['month'] = months[form.month.data]
-            if form.cleared.data is True:
-                qstrg['cleared'] = form.cleared.data
-
-        url = 'http://127.0.0.1:5000/api/invoices?'
-        count = 0
-        for key, value in qstrg.items():
-            if count == 0:
-                url += key + '=' + str(value)
-                count += 1
-            else:
-                url += '&' + key + '=' + str(value)
-            
-        print(url)
+    url = 'http://127.0.0.1:5000/api/invoices?' + urlencode(qstrg)
+        
+    print(url)
 
     
 

@@ -30,24 +30,29 @@ class Invoices_api(Resource):
             invoices = invoices.filter_by(kunde=client_id)
 
         if clear:
-            # invoices = invoices.filter_by(beglichen=clear)
-            invoices = invoices.filter(InvoiceModel.beglichen is True).all()
+            invoices = invoices.filter(InvoiceModel.beglichen == 1)
             # wenn clear= werden alle False angezeigt; wenn clear=xy alle True
 
         if year:
-            # invoices = invoices.filter(InvoiceModel.datum.like(f'%{year}%')).all()
-            invoices = invoices.filter(extract('year', InvoiceModel.datum) == year).all()  # noqa: E501
+            invoices = invoices.filter(extract('year', InvoiceModel.datum) == year)
 
         if month:
-            invoices = invoices.filter(extract('month', InvoiceModel.datum) == month).all()  # noqa: E501
-
+            invoices = invoices.filter(extract('month', InvoiceModel.datum) == month)
+            
+        results = invoices.all()
+        '''
+        durch .all() wird das query object zu einer Liste. Auf diese kann dann 'filter '
+        nicht mehr angewendet werden. 
+        '''
+        
         output = []
 
-        for invoice in invoices:
+        for invoice in results:
             invoice_data = {}
             invoice_data['client'] = invoice.kunde
             invoice_data['datum'] = invoice.datum
             invoice_data['betrag'] = invoice.betrag
+            invoice_data['cleared'] = invoice.beglichen
 
             output.append(invoice_data)
 
