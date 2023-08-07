@@ -1,9 +1,11 @@
+from datetime import datetime
+
 from flask import jsonify
 from flask_restful import Resource, Api, reqparse
 from flask_smorest import Blueprint
 from sqlalchemy import extract
 
-from models import InvoiceModel
+from models import InvoiceModel, ClientModel
 
 
 blp = Blueprint('resources', __name__, description="actions on resources")
@@ -48,9 +50,12 @@ class Invoices_api(Resource):
         output = []
 
         for invoice in results:
+            # Um statt IDs Namen auszugeben
+            kunde = ClientModel.query.filter_by(id=invoice.kunde).first()
+
             invoice_data = {}
-            invoice_data['client'] = invoice.kunde
-            invoice_data['datum'] = invoice.datum
+            invoice_data['client'] = kunde.name
+            invoice_data['datum'] = invoice.datum.strftime('%Y %b')
             invoice_data['betrag'] = invoice.betrag
             invoice_data['cleared'] = invoice.beglichen
 

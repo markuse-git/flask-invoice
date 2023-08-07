@@ -37,7 +37,7 @@
     <!-- {{ invoice_data }} -->
 
     {% for invoice in invoice_data['Invoices'] %}
-        <p>{{ invoice.client }} | {{ invoice.betrag }} | {{ invoice.datum }} | {{ invoice.cleared }} </p>
+        <p>{{ invoice.client }} | {{ invoice.betrag }} € | {{ invoice.datum }} | {{ invoice.cleared }} </p>
     {% endfor %}
 
 </div>

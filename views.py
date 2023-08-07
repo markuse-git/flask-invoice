@@ -205,6 +205,7 @@ def invoices():
         }
 
     qstrg = {}
+    invoice_data = []
 
     if form.validate_on_submit():
 
@@ -232,6 +233,7 @@ def invoices():
             response = {'result':None}
 
         invoice_data = data if data else []
+        # invoice_data.append(data)
         
     # print(url)
 
