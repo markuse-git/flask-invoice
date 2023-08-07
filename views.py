@@ -1,3 +1,7 @@
+import requests
+from requests.exceptions import RequestException
+import json
+
 from datetime import datetime, timedelta
 
 from flask import render_template
@@ -185,4 +189,52 @@ def invoices():
 
     form = InvoicesForm()
 
-    return render_template('invoices.html', form=form)
+    months = {
+            'Jan':1,
+            'Feb':2,
+            'Mrz':3,
+            'Apr':4,
+            'Mai':5,
+            'Jun':6,
+            'Jul':7,
+            'Aug':8,
+            'Sep':9,
+            'Okt':10,
+            'Nov':11,
+            'Dez':12,
+        }
+
+    qstrg = {}
+    invoice_data = []
+
+    if form.validate_on_submit():
+
+        if form.client.data != 'All':
+            client = ClientModel.query.filter_by(name=form.client.data).first()
+            qstrg['client'] = client.id
+        if form.year.data != 'All':
+            qstrg['year'] = form.year.data
+        if form.month.data != 'All':
+            qstrg['month'] = months[form.month.data]
+        if form.cleared.data is True:
+            qstrg['clear'] = form.cleared.data
+
+        try:
+            json_data = json.dumps(qstrg)
+            url = 'http://127.0.0.1:5000/api/invoices?'
+            headers = {'Content-Type':'application/json'}
+            response = requests.get(url, data=json_data, headers=headers)
+            data = response.json()
+        except RequestException as e:
+            print(f"Request Exception: {e}")
+            response = {'result':None}
+        except json.decoder.JSONDecodeError as e:
+            print(f"JSON Decode Error: {e}")
+            response = {'result':None}
+
+        invoice_data = data if data else []
+        # invoice_data.append(data)
+        
+    # print(url)
+
+    return render_template('invoices.html', form=form, invoice_data=invoice_data)

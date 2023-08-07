@@ -4,6 +4,7 @@ from flask_admin import Admin
 from flask_security import Security
 
 from views import blp as ViewsBlueprint
+from resources import blp as ResourcesBlueprint
 from admin import ClientView, InvoiceView, ItemView, RolesView, UserView
 from models import ClientModel, InvoiceModel, ItemModel, user_datastore, Role, User  # noqa: E501
 
@@ -33,6 +34,7 @@ def create_app():
     Security(app, user_datastore)
 
     app.register_blueprint(ViewsBlueprint)
+    app.register_blueprint(ResourcesBlueprint) # API registrieren
 
     db.init_app(app)
     with app.app_context():
