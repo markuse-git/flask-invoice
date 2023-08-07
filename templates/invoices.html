@@ -33,6 +33,13 @@
 
     <p>jetzt folgt die ausgabe</p>
 
+
+    <!-- {{ invoice_data }} -->
+
+    {% for invoice in invoice_data['Invoices'] %}
+        <p>{{ invoice.client }} | {{ invoice.betrag }} | {{ invoice.datum }} | {{ invoice.cleared }} </p>
+    {% endfor %}
+
 </div>
 
 {% endblock %}

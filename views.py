@@ -1,3 +1,7 @@
+import requests
+from requests.exceptions import RequestException
+import json
+
 from datetime import datetime, timedelta
 
 from flask import render_template
@@ -5,7 +9,6 @@ from flask_smorest import Blueprint
 from wtforms import StringField, IntegerField, SelectField, DecimalField, BooleanField
 from flask_security import roles_accepted
 from sqlalchemy import desc
-from urllib.parse import urlencode
 
 from models import ClientModel, ItemModel, InvoiceModel, Items_Invoices
 from forms import ItemForm, InvoicesForm
@@ -204,6 +207,7 @@ def invoices():
     qstrg = {}
 
     if form.validate_on_submit():
+
         if form.client.data != 'All':
             client = ClientModel.query.filter_by(name=form.client.data).first()
             qstrg['client'] = client.id
@@ -214,10 +218,21 @@ def invoices():
         if form.cleared.data is True:
             qstrg['clear'] = form.cleared.data
 
-    url = 'http://127.0.0.1:5000/api/invoices?' + urlencode(qstrg)
+        try:
+            json_data = json.dumps(qstrg)
+            url = 'http://127.0.0.1:5000/api/invoices?'
+            headers = {'Content-Type':'application/json'}
+            response = requests.get(url, data=json_data, headers=headers)
+            data = response.json()
+        except RequestException as e:
+            print(f"Request Exception: {e}")
+            response = {'result':None}
+        except json.decoder.JSONDecodeError as e:
+            print(f"JSON Decode Error: {e}")
+            response = {'result':None}
+
+        invoice_data = data if data else []
         
-    print(url)
+    # print(url)
 
-    
-
-    return render_template('invoices.html', form=form)
+    return render_template('invoices.html', form=form, invoice_data=invoice_data)
