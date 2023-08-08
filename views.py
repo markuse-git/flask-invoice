@@ -118,7 +118,8 @@ def neue_rechnung_erzeugen():
             datum = datetime.now(),
             betrag = brutto,
             beglichen = False,
-            kunde = client.id
+            kunde = client.id,
+            nr = rechnungsnummer_output
         )
         db.session.add(new_invoice)
         db.session.commit()

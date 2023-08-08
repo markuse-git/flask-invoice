@@ -31,14 +31,36 @@
         </div>
     </form>
 
-    <p>jetzt folgt die ausgabe</p>
 
+    <!-- AUSGABE API -->
 
     <!-- {{ invoice_data }} -->
 
-    {% for invoice in invoice_data['Invoices'] %}
-        <p>{{ invoice.client }} | {{ invoice.betrag }} € | {{ invoice.datum }} | {{ invoice.cleared }} </p>
-    {% endfor %}
+    {% if invoice_data['Invoices'] %}
+        <div class="table-container">
+            <table class="invoices">
+                <tr class="invoices__heads">
+                    <th class="invoices__cell">Nr</th>
+                    <th class="invoices__cell">Kunde</th>
+                    <th class="invoices__cell">Betrag</th>
+                    <th class="invoices__cell">Datum</th>
+                    <th class="invoices__cell">Beglichen?</th>
+                </tr>
+                {% for invoice in invoice_data['Invoices'] %}
+                <tr class="invoices__body">
+                    <td class="invoices__cell">{{ invoice.nr }}</td>
+                    <td class="invoices__cell">{{ invoice.client }}</td>
+                    <td class="invoices__cell">{{ invoice.betrag }} €</td>
+                    <td class="invoices__cell">{{ invoice.datum }}</td>
+                    <td class="invoices__cell">{{ invoice.cleared }}</td>
+                </tr>
+                {% endfor %}
+            </table>  
+        </div>
+            
+    {% else %}
+        <p>No invoices found</p>
+    {% endif %}
 
 </div>
 

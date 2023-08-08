@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from flask import jsonify
 from flask_restful import Resource, Api, reqparse
 from flask_smorest import Blueprint
@@ -54,6 +52,7 @@ class Invoices_api(Resource):
             kunde = ClientModel.query.filter_by(id=invoice.kunde).first()
 
             invoice_data = {}
+            invoice_data['nr'] = invoice.nr
             invoice_data['client'] = kunde.name
             invoice_data['datum'] = invoice.datum.strftime('%Y %b')
             invoice_data['betrag'] = invoice.betrag

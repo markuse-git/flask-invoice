@@ -28,3 +28,22 @@
         }
     }
 }
+
+.table-container{
+    margin-top: 2rem;
+}
+
+.invoices{
+    &__heads{
+        text-transform: uppercase;
+        font-weight: 300;   
+    }
+
+    &__cell{
+        padding-right: 4rem;
+        
+        &:not(:first-child){
+            text-align: right;
+        }
+    }
+}
