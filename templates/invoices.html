@@ -34,10 +34,13 @@
 
     <!-- AUSGABE API -->
 
+    <!-- {{ invoice_data }} -->
+
     {% if invoice_data['Invoices'] %}
         <div class="table-container">
             <table class="invoices">
                 <tr class="invoices__heads">
+                    <th class="invoices__cell">Nr</th>
                     <th class="invoices__cell">Kunde</th>
                     <th class="invoices__cell">Betrag</th>
                     <th class="invoices__cell">Datum</th>
@@ -45,6 +48,7 @@
                 </tr>
                 {% for invoice in invoice_data['Invoices'] %}
                 <tr class="invoices__body">
+                    <td class="invoices__cell">{{ invoice.nr }}</td>
                     <td class="invoices__cell">{{ invoice.client }}</td>
                     <td class="invoices__cell">{{ invoice.betrag }} €</td>
                     <td class="invoices__cell">{{ invoice.datum }}</td>

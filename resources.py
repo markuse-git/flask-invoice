@@ -52,6 +52,7 @@ class Invoices_api(Resource):
             kunde = ClientModel.query.filter_by(id=invoice.kunde).first()
 
             invoice_data = {}
+            invoice_data['nr'] = invoice.nr
             invoice_data['client'] = kunde.name
             invoice_data['datum'] = invoice.datum.strftime('%Y %b')
             invoice_data['betrag'] = invoice.betrag
