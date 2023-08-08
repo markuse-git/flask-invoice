@@ -381,3 +381,15 @@ thead .list-checkbox-column {
     box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2); }
     .invoices-form__btn-btn:hover {
       background-color: green; }
+
+.table-container {
+  margin-top: 2rem; }
+
+.invoices__heads {
+  text-transform: uppercase;
+  font-weight: 300; }
+
+.invoices__cell {
+  padding-right: 4rem; }
+  .invoices__cell:not(:first-child) {
+    text-align: right; }

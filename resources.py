@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from flask import jsonify
 from flask_restful import Resource, Api, reqparse
 from flask_smorest import Blueprint
