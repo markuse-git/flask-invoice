@@ -32,8 +32,8 @@ class InvoiceModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     datum = db.Column(db.DateTime)
     betrag = db.Column(db.Numeric(7,2))    
-    beglichen = db.Column(db.Boolean)
     nr = db.Column(db.Integer)
+    offen = db.Column(db.String(25))
 
     kunde = db.Column(db.Integer, db.ForeignKey('client.id'))
 

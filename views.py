@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 
 from flask import render_template
 from flask_smorest import Blueprint
-from wtforms import StringField, IntegerField, SelectField, DecimalField, BooleanField
+from wtforms import StringField, IntegerField, SelectField, DecimalField, BooleanField, RadioField
 from flask_security import roles_accepted
 from sqlalchemy import desc
 
@@ -117,7 +117,7 @@ def neue_rechnung_erzeugen():
         new_invoice = InvoiceModel(
             datum = datetime.now(),
             betrag = brutto,
-            beglichen = False,
+            beglichen = 'nein',  #! clear Änderung
             kunde = client.id,
             nr = rechnungsnummer_output
         )
@@ -186,7 +186,8 @@ def invoices():
     InvoicesForm.client = SelectField('Client', choices=clients_names, default='All')
     InvoicesForm.year = SelectField('Year', choices=invoices_dates, default='All')
     InvoicesForm.month = SelectField('Month', choices=months, default='All')
-    InvoicesForm.cleared = BooleanField('Cleared')
+    # InvoicesForm.cleared = BooleanField('Cleared')  #! clear Änderung
+    InvoicesForm.cleared = SelectField('Cleared', choices=['ja', 'nein', 'All'], default='All')
 
     form = InvoicesForm()
 
@@ -217,7 +218,8 @@ def invoices():
             qstrg['year'] = form.year.data
         if form.month.data != 'All':
             qstrg['month'] = months[form.month.data]
-        if form.cleared.data is True:
+        # if form.cleared.data is True:   #! clear Änderung
+        if form.cleared.data != 'All':
             qstrg['clear'] = form.cleared.data
 
         try:
@@ -228,14 +230,11 @@ def invoices():
             data = response.json()
         except RequestException as e:
             print(f"Request Exception: {e}")
-            response = {'result':None}
+            data = {'result':None}
         except json.decoder.JSONDecodeError as e:
             print(f"JSON Decode Error: {e}")
-            response = {'result':None}
+            data = {'result':None}
 
         invoice_data = data if data else []
-        # invoice_data.append(data)
-        
-    # print(url)
 
     return render_template('invoices.html', form=form, invoice_data=invoice_data)
