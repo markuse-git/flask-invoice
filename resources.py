@@ -16,7 +16,7 @@ class Invoices_api(Resource):
         parser.add_argument('client', type=int, help='Client ID')
         parser.add_argument('year', type=int, help='Year')
         parser.add_argument('month', type=str, help='Month')
-        parser.add_argument('clear', type=bool, help='Cleared?')
+        parser.add_argument('clear', type=str, help='Cleared?')
 
         args = parser.parse_args()
         client_id = args.get('client')
@@ -30,7 +30,7 @@ class Invoices_api(Resource):
             invoices = invoices.filter_by(kunde=client_id)
 
         if clear:
-            invoices = invoices.filter(InvoiceModel.beglichen == 1)
+            invoices = invoices.filter(InvoiceModel.offen == clear)
             # wenn clear= werden alle False angezeigt; wenn clear=xy alle True
 
         if year:
@@ -56,7 +56,7 @@ class Invoices_api(Resource):
             invoice_data['client'] = kunde.name
             invoice_data['datum'] = invoice.datum.strftime('%Y %b')
             invoice_data['betrag'] = invoice.betrag
-            invoice_data['cleared'] = invoice.beglichen
+            invoice_data['cleared'] = invoice.offen
 
             output.append(invoice_data)
 

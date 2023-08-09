@@ -20,6 +20,12 @@ class InvoiceView(ModelView):
     #! Discort Lines führen zu Fehler bei admin/invoicemodel 
     #! TypeError: __str__ returned non-string (type int)
     form_excluded_columns = ['items']
+    form_choices = {
+        'offen' : [
+            ('ja','ja'),
+            ('nein','nein')
+        ]
+    }
 
     # Um die Anzeige in Admin/Invoices zu verändern. 
     column_formatters = {
