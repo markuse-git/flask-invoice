@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 
 from flask import render_template
 from flask_smorest import Blueprint
-from wtforms import StringField, IntegerField, SelectField, DecimalField, BooleanField, RadioField
+from wtforms import StringField, IntegerField, SelectField, DecimalField
 from flask_security import roles_accepted
 from sqlalchemy import desc
 
@@ -117,7 +117,7 @@ def neue_rechnung_erzeugen():
         new_invoice = InvoiceModel(
             datum = datetime.now(),
             betrag = brutto,
-            beglichen = 'nein',  #! clear Änderung
+            beglichen = 'nein',  # 'nein' ist default
             kunde = client.id,
             nr = rechnungsnummer_output
         )
@@ -186,8 +186,7 @@ def invoices():
     InvoicesForm.client = SelectField('Client', choices=clients_names, default='All')
     InvoicesForm.year = SelectField('Year', choices=invoices_dates, default='All')
     InvoicesForm.month = SelectField('Month', choices=months, default='All')
-    # InvoicesForm.cleared = BooleanField('Cleared')  #! clear Änderung
-    InvoicesForm.cleared = SelectField('Cleared', choices=['ja', 'nein', 'All'], default='All')
+    InvoicesForm.cleared = SelectField('Cleared', choices=['ja', 'nein', 'All'], default='All')  # noqa: E501
 
     form = InvoicesForm()
 
@@ -218,7 +217,6 @@ def invoices():
             qstrg['year'] = form.year.data
         if form.month.data != 'All':
             qstrg['month'] = months[form.month.data]
-        # if form.cleared.data is True:   #! clear Änderung
         if form.cleared.data != 'All':
             qstrg['clear'] = form.cleared.data
 
@@ -228,6 +226,12 @@ def invoices():
             headers = {'Content-Type':'application/json'}
             response = requests.get(url, data=json_data, headers=headers)
             data = response.json()
+
+            # Berechnung der Betragssumme
+            summe = 0.0
+            for i in data['Invoices']:
+                summe += float(i['betrag'])
+
         except RequestException as e:
             print(f"Request Exception: {e}")
             data = {'result':None}
@@ -237,4 +241,4 @@ def invoices():
 
         invoice_data = data if data else []
 
-    return render_template('invoices.html', form=form, invoice_data=invoice_data)
+    return render_template('invoices.html', form=form, invoice_data=invoice_data, summe='{:.2f}'.format(summe))  # noqa: E501
