@@ -393,3 +393,7 @@ thead .list-checkbox-column {
   padding-right: 4rem; }
   .invoices__cell:not(:first-child) {
     text-align: right; }
+
+.summe {
+  margin-top: 2rem;
+  font-weight: bold; }
