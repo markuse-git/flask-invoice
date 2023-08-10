@@ -13,7 +13,11 @@
             <li class="playground__item"><a href="{{ url_for('views.neue_rechnung_erzeugen') }}" class="playground__link">Neue Rechnung</a></li>
             <li class="playground__item"><a href="{{ url_for('views.invoices') }}" class="playground__link">Invoices</a></li>
             <li class="playground__item"><a href="{{ url_for('admin.index') }}" class="playground__link">Admin</a></li>
+            {% if current_user.is_authenticated %}
+            <li class="playground__item"><a href="{{ url_for('security.logout') }}" class="playground__link">Logout</a></li>
+            {% else %}
             <li class="playground__item"><a href="{{ url_for('security.login') }}" class="playground__link">Login</a></li>
+            {% endif %}
             </ul>
     </nav>
 </div>
