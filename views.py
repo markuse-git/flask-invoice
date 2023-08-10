@@ -56,7 +56,7 @@ def neue_rechnung_erzeugen():
     for item in items:
         setattr(ItemForm, 'beschreibung' + str(item.id), StringField(item.beschreibung))
         setattr(ItemForm, 'stueckpreis' + str(item.id), DecimalField(item.stueckpreis))
-        setattr(ItemForm, 'anzahl' + str(item.id), IntegerField(item.anzahl, default=0))
+        setattr(ItemForm, 'anzahl' + str(item.id), IntegerField('anzahl', default=0))
 
     form = ItemForm()
 
@@ -117,7 +117,7 @@ def neue_rechnung_erzeugen():
         new_invoice = InvoiceModel(
             datum = datetime.now(),
             betrag = brutto,
-            beglichen = 'nein',  # 'nein' ist default
+            offen = 'nein',  # 'nein' ist default
             kunde = client.id,
             nr = rechnungsnummer_output
         )
@@ -207,6 +207,7 @@ def invoices():
 
     qstrg = {}
     invoice_data = []
+    summe = 0.0
 
     if form.validate_on_submit():
 
@@ -228,7 +229,6 @@ def invoices():
             data = response.json()
 
             # Berechnung der Betragssumme
-            summe = 0.0
             for i in data['Invoices']:
                 summe += float(i['betrag'])
 
