@@ -1,18 +1,24 @@
 # App zur Erzeugung und Suche von Rechnungen
 
-platzhalter  
+Rechnungen werden über etf Fromular erfasst, als html erzeugt, als pdf gespeichert und in der DB (sqlite) gespeichert. Per Admin können Kunden, Leistungen und Rechnungen verwaltet werden. Über API werden die Rechnungen abgefragt und mit Betragssummen ausgegeben.
 
-## offene Fragen
+## Packages
 
-platzhalter
+migrate, restful, security, smorest, sqlalchemy, WTF, pdfkit, admin, sass
 
-## Plan
+## Besonderheiten
 
-- pdf wird erzeugt
-- es wird ein Datensatz in der Tabelle 'Rechnungen' erzeugt. Inkl. pdf (Nr., Datum, Kunde, Betrag, beglichen?, pdf)
-- Nach Rechnungs-Suche wird die Summe der Rechnungsbeträge ausgegeben
-- Rechnungssuche nach Datum (Jahr, Monat), Kunde, beglichen?
+- DB n:m Beziehung (Invoice, Item)
+- Berechnung von Betragssummen
+- CSS animiertes Menü
+- Komplexe Abfrage für RESTFul API
+- Anpassung von Security Templates
+- Condition User Authentifizierung in jinja2
+- Design (Rechnung)
 
-## Anmerkungen
+## Schwierigkeiten
 
-- Invoice Model im Admin Bereich wird NUR dafür benötigt Rechnungen ggf. als beglichen zu kennzeichnen
+- n:m Beziehung -> Daten in Connection Table schreiben
+- API RESTful -> komplexe Abfrage gestalten
+- Fortlaufende Rechnungsnummer
+- Layout der 2 spaltigen Rechnung + Speicherung ans pdf
