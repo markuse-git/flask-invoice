@@ -11,7 +11,7 @@ class ClientView(ModelView):
     form_excluded_columns = ['invoices']
     
 class ItemView(ModelView):
-    form_excluded_columns = ['invoice']
+    form_excluded_columns = ['invoice', 'anzahl']
     column_exclude_list = ['anzahl']
 
 class InvoiceView(ModelView):
