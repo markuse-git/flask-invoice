@@ -57,7 +57,6 @@ def neue_rechnung_erzeugen():
         setattr(ItemForm, 'beschreibung' + str(item.id), StringField(item.beschreibung))
         setattr(ItemForm, 'stueckpreis' + str(item.id), DecimalField(item.stueckpreis))
         setattr(ItemForm, 'anzahl' + str(item.id), IntegerField('anzahl', default=0))
-        # setattr(ItemForm, 'anzahl' + str(item.id), IntegerField(item.anzahl, default=0)) #! Anzahl
 
     form = ItemForm()
 
@@ -230,7 +229,6 @@ def invoices():
             data = response.json()
 
             # Berechnung der Betragssumme
-            # summe = 0.0
             for i in data['Invoices']:
                 summe += float(i['betrag'])
 

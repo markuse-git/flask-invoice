@@ -11,8 +11,7 @@ class ClientView(ModelView):
     form_excluded_columns = ['invoices']
     
 class ItemView(ModelView):
-    form_excluded_columns = ['invoice', 'anzahl']
-    column_exclude_list = ['anzahl']
+    form_excluded_columns = ['invoice']
 
 class InvoiceView(ModelView):
     # column_hide_backrefs = False # Discord antwort
