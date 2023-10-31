@@ -78,6 +78,8 @@ class User(db.Model, UserMixin):
     active = db.Column(db.Boolean())
     confirmed_at = db.Column(db.DateTime())
 
+    fs_uniquifier = db.Column(db.String(64))
+
     roles = db.relationship('Role', secondary='roles_users', backref=db.backref('users', lazy='dynamic'))  # noqa: E501
 
 

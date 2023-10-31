@@ -223,7 +223,7 @@ def invoices():
 
         try:
             json_data = json.dumps(qstrg)
-            url = 'http://127.0.0.1:5000/api/invoices?'
+            url = 'http://127.0.0.1:8888/api/invoices?'
             headers = {'Content-Type':'application/json'}
             response = requests.get(url, data=json_data, headers=headers)
             data = response.json()
