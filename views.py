@@ -43,7 +43,7 @@ def index():
     return render_template('index.html')
 
 @blp.route('/neue-rechnung-erzeugen', methods=['GET','POST'])
-@roles_accepted('admin')
+# @roles_accepted('admin')
 def neue_rechnung_erzeugen():
 
     items = ItemModel.query.all()    
@@ -223,7 +223,7 @@ def invoices():
 
         try:
             json_data = json.dumps(qstrg)
-            url = 'http://127.0.0.1:8888/api/invoices?'
+            url = 'http://127.0.0.1:5000/api/invoices?'
             headers = {'Content-Type':'application/json'}
             response = requests.get(url, data=json_data, headers=headers)
             data = response.json()

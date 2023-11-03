@@ -8,6 +8,8 @@ from resources import blp as ResourcesBlueprint
 from admin import ClientView, InvoiceView, ItemView, RolesView, UserView
 from models import ClientModel, InvoiceModel, ItemModel, user_datastore, Role, User  # noqa: E501
 
+import logging
+
 from db import db
 
 
@@ -42,6 +44,8 @@ def create_app():
 
     migrate = Migrate()
     migrate.init_app(app, db)
+
+    logging.basicConfig(level=logging.DEBUG)
     
     return app
 
