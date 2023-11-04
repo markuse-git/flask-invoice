@@ -1,5 +1,5 @@
 from db import db
-from flask_security import SQLAlchemyUserDatastore, UserMixin, RoleMixin
+from flask_login import UserMixin
 
 
 # Client:Invoice => 1:n
@@ -63,7 +63,7 @@ class Roles_Users(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'))
 
-class Role(db.Model, RoleMixin):
+class Role(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(80), unique=True)
     descsription = db.Column(db.String(255))
@@ -82,5 +82,3 @@ class User(db.Model, UserMixin):
 
     roles = db.relationship('Role', secondary='roles_users', backref=db.backref('users', lazy='dynamic'))  # noqa: E501
 
-
-user_datastore = SQLAlchemyUserDatastore(db, User, Role)

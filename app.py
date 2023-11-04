@@ -1,12 +1,11 @@
 from flask import Flask
 from flask_migrate import Migrate
 from flask_admin import Admin
-from flask_security import Security
 
 from views import blp as ViewsBlueprint
 from resources import blp as ResourcesBlueprint
 from admin import ClientView, InvoiceView, ItemView, RolesView, UserView
-from models import ClientModel, InvoiceModel, ItemModel, user_datastore, Role, User  # noqa: E501
+from models import ClientModel, InvoiceModel, ItemModel, Role, User  # noqa: E501
 
 import logging
 
@@ -33,7 +32,6 @@ def create_app():
     admin.add_view(RolesView(Role, db.session, 'Roles'))
     admin.add_view(UserView(User, db.session, 'Users'))
 
-    Security(app, user_datastore)
 
     app.register_blueprint(ViewsBlueprint)
     app.register_blueprint(ResourcesBlueprint) # API registrieren

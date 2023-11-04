@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+{% include "menu.html" %}
+
+    <form class="login-form" method="POST" action="/login">
+        <div class="login-form__inputs">
+            {{ form.csrf_token }}
+            <div class="invoices-form__chunks">
+                {{ form.username.label(class="login-form__label") }}
+                {{ form.username }}
+            </div>
+            <div class="invoices-form__chunks">
+                {{ form.password.label(class="login-form__label") }}
+                {{ form.password }}
+            </div>
+        </div>
+        <div class="login-form__btn">
+            <button class="login-form__btn-btn">Submit</button>
+        </div>
+    </form>
+
+</div>
+
+{% endblock %}

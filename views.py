@@ -7,7 +7,6 @@ from datetime import datetime, timedelta
 from flask import render_template
 from flask_smorest import Blueprint
 from wtforms import StringField, IntegerField, SelectField, DecimalField
-from flask_security import roles_accepted
 from sqlalchemy import desc
 
 from models import ClientModel, ItemModel, InvoiceModel, Items_Invoices
@@ -43,7 +42,6 @@ def index():
     return render_template('index.html')
 
 @blp.route('/neue-rechnung-erzeugen', methods=['GET','POST'])
-# @roles_accepted('admin')
 def neue_rechnung_erzeugen():
 
     items = ItemModel.query.all()    
